@@ -6,14 +6,7 @@ import {
 } from "lucide-react";
 import { Card } from "./ui/card";
 
-const COLORS = [
-  "#8b5cf6", "#ec4899", "#06b6d4", "#10b981", "#f59e0b",
-  "#6366f1", "#14b8a6", "#8b5cf6", "#f43f5e", "#0ea5e9",
-  "#8b5cf6", "#ec4899", "#06b6d4", "#10b981", "#f59e0b",
-  "#6366f1", "#14b8a6", "#f43f5e"
-];
-
-const categories = [
+export const categories = [
   { name: "Продукти та супермаркети", value: 15000, icon: ShoppingCart },
   { name: "Кафе та ресторани", value: 8000, icon: Coffee },
   { name: "Розваги", value: 5000, icon: Gamepad },
@@ -32,6 +25,13 @@ const categories = [
   { name: "Краса та здоров'я", value: 4000, icon: Heart },
   { name: "Подарунки та благодійність", value: 2500, icon: Gift },
   { name: "Інше", value: 1500, icon: MoreHorizontal },
+];
+
+const COLORS = [
+  "#8b5cf6", "#ec4899", "#06b6d4", "#10b981", "#f59e0b",
+  "#6366f1", "#14b8a6", "#8b5cf6", "#f43f5e", "#0ea5e9",
+  "#8b5cf6", "#ec4899", "#06b6d4", "#10b981", "#f59e0b",
+  "#6366f1", "#14b8a6", "#f43f5e"
 ];
 
 const CategorySpending = () => {
