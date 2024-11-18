@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { TrendingUp, DollarSign, CreditCard, AlertCircle, Zap } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CategorySpending from "@/components/CategorySpending";
+import TransactionPanel from "@/components/TransactionPanel";
 
 // Exchange rate: 1 USD = 38.5 UAH (as of April 2024)
 const UAH_EXCHANGE_RATE = 38.5;
@@ -135,6 +137,15 @@ const Index = () => {
             ))}
           </div>
         </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+        <div className="lg:col-span-2">
+          <CategorySpending />
+        </div>
+        <div>
+          <TransactionPanel />
+        </div>
       </div>
 
       <Card className="mt-6 p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800">
