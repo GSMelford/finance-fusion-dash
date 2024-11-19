@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { TrendingUp, DollarSign, CreditCard, AlertCircle, Zap } from "lucide-react";
+import { TrendingUp, DollarSign, CreditCard, AlertCircle } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CategorySpending from "@/components/CategorySpending";
 import TransactionPanel from "@/components/TransactionPanel";
+import SmartConclusions from "@/components/SmartConclusions";
 
 // Exchange rate: 1 USD = 38.5 UAH (as of April 2024)
 const UAH_EXCHANGE_RATE = 38.5;
@@ -163,46 +164,7 @@ const Index = () => {
         </div>
       </div>
 
-      <Card className="mt-6 p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800">
-        <div className="flex items-center space-x-2 text-amber-500 mb-4">
-          <Zap className="w-5 h-5" />
-          <h2 className="text-xl font-semibold dark:text-white">Розумні висновки</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            {
-              title: "Аналіз витрат",
-              content: "Ваші витрати на розваги зросли на 15% цього місяця. Рекомендуємо переглянути бюджет.",
-              metric: "+15%",
-              email: "monthly_report@example.com"
-            },
-            {
-              title: "Досягнення цілей",
-              content: "Вітаємо! Ви досягли мети заощаджень на цей квартал у розмірі ₴19,250!",
-              metric: "100%",
-              email: "goals@example.com"
-            },
-            {
-              title: "Оптимізація підписок",
-              content: "Знайдено 3 невикористані підписки на загальну суму ₴770/місяць",
-              metric: "₴770",
-              email: "subscriptions@example.com"
-            }
-          ].map((insight, index) => (
-            <div
-              key={index}
-              className="p-4 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-colors dark:bg-gray-700/50 dark:hover:bg-gray-700"
-            >
-              <h3 className="font-semibold mb-2 dark:text-white">{insight.title}</h3>
-              <p className="text-sm text-muted-foreground dark:text-gray-400">{insight.content}</p>
-              <div className="mt-2 flex justify-between items-center">
-                <span className="text-sm font-medium text-primary">{insight.metric}</span>
-                <span className="text-xs text-muted-foreground dark:text-gray-500">{insight.email}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
+      <SmartConclusions />
     </div>
   );
 };
