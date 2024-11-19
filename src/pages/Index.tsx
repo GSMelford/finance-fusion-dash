@@ -18,24 +18,24 @@ const convertToUAH = (usd: number) => {
 
 const timeframeData = {
   week: [
-    { name: "Mon", expenses: 2000, income: 1400 },
-    { name: "Tue", expenses: 1500, income: 1210 },
-    { name: "Wed", expenses: 1000, income: 1290 },
-    { name: "Thu", expenses: 1780, income: 1000 },
-    { name: "Fri", expenses: 890, income: 1181 },
-    { name: "Sat", expenses: 1390, income: 1500 },
-    { name: "Sun", expenses: 1490, income: 1200 },
+    { name: "Mon", expenses: 2000, income: 1400, forecast: 1700 },
+    { name: "Tue", expenses: 1500, income: 1210, forecast: 1600 },
+    { name: "Wed", expenses: 1000, income: 1290, forecast: 1500 },
+    { name: "Thu", expenses: 1780, income: 1000, forecast: 1400 },
+    { name: "Fri", expenses: 890, income: 1181, forecast: 1300 },
+    { name: "Sat", expenses: 1390, income: 1500, forecast: 1200 },
+    { name: "Sun", expenses: 1490, income: 1200, forecast: 1100 },
   ],
   month: [
-    { name: "Week 1", expenses: 4000, income: 2400 },
-    { name: "Week 2", expenses: 3000, income: 2210 },
-    { name: "Week 3", expenses: 2000, income: 2290 },
-    { name: "Week 4", expenses: 2780, income: 2000 },
+    { name: "Week 1", expenses: 4000, income: 2400, forecast: 3000 },
+    { name: "Week 2", expenses: 3000, income: 2210, forecast: 2800 },
+    { name: "Week 3", expenses: 2000, income: 2290, forecast: 2600 },
+    { name: "Week 4", expenses: 2780, income: 2000, forecast: 2400 },
   ],
   quarter: [
-    { name: "Month 1", expenses: 12000, income: 9400 },
-    { name: "Month 2", expenses: 9000, income: 8210 },
-    { name: "Month 3", expenses: 8000, income: 8290 },
+    { name: "Month 1", expenses: 12000, income: 9400, forecast: 10000 },
+    { name: "Month 2", expenses: 9000, income: 8210, forecast: 9500 },
+    { name: "Month 3", expenses: 8000, income: 8290, forecast: 9000 },
   ],
 };
 
