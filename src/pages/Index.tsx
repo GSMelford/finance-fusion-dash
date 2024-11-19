@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { TrendingUp, DollarSign, CreditCard, AlertCircle } from "lucide-react";
+import { TrendingUp, DollarSign, CreditCard, AlertCircle, User } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CategorySpending from "@/components/CategorySpending";
 import TransactionPanel from "@/components/TransactionPanel";
 import SmartConclusions from "@/components/SmartConclusions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Exchange rate: 1 USD = 38.5 UAH (as of April 2024)
 const UAH_EXCHANGE_RATE = 38.5;
@@ -51,48 +52,39 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
       <header className="mb-8 animate-fade-up">
-        <div className="flex flex-col items-center text-center mb-6">
-          <span className="text-sm font-medium text-primary px-3 py-1 rounded-full bg-primary/10 mb-2">
-            Фінансова панель
-          </span>
-          <h1 className="text-4xl font-bold mb-2 dark:text-white">Фінансова панель управління</h1>
-          <p className="text-muted-foreground dark:text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-primary px-3 py-1 rounded-full bg-primary/10 mb-2">
+              Фінансова панель
+            </span>
+            <h1 className="text-4xl font-bold mb-2 dark:text-white">Фінансова панель управління</h1>
+            <p className="text-muted-foreground dark:text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
+          </div>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/placeholder.svg" alt="User" />
+              <AvatarFallback>
+                <User className="h-4 w-4" />
+              </AvatarFallback>
+            </Avatar>
+            <span>Мій особистий кабінет</span>
+          </Button>
+        </div>
           
-          {/* Exchange Rates Card */}
-          <Card className="w-full max-w-sm mt-4 p-4">
-            <h3 className="font-semibold mb-2">Курси валют</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-muted-foreground">EUR/UAH</p>
-                <p className="text-lg font-bold">41.50</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">USD/UAH</p>
-                <p className="text-lg font-bold">38.50</p>
-              </div>
+        {/* Exchange Rates Card */}
+        <Card className="w-full max-w-sm mt-4 p-4">
+          <h3 className="font-semibold mb-2">Курси валют</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-sm text-muted-foreground">EUR/UAH</p>
+              <p className="text-lg font-bold">41.50</p>
             </div>
-          </Card>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[
-            { icon: DollarSign, label: "Загальний баланс", value: convertToUAH(12450) },
-            { icon: TrendingUp, label: "Місячний дохід", value: convertToUAH(4850) },
-            { icon: CreditCard, label: "Загальні витрати", value: convertToUAH(2360) },
-          ].map((stat, index) => (
-            <Card key={index} className="p-6 hover-scale dark:bg-gray-800">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <stat.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground dark:text-gray-400">{stat.label}</p>
-                  <h3 className="text-2xl font-bold dark:text-white">₴{stat.value}</h3>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+            <div>
+              <p className="text-sm text-muted-foreground">USD/UAH</p>
+              <p className="text-lg font-bold">38.50</p>
+            </div>
+          </div>
+        </Card>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -100,7 +92,7 @@ const Index = () => {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
             <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
-              <TabsList>
+              <TabsList className="bg-secondary/80 backdrop-blur-sm">
                 <TabsTrigger value="week">Тиждень</TabsTrigger>
                 <TabsTrigger value="month">Місяць</TabsTrigger>
                 <TabsTrigger value="quarter">3 місяці</TabsTrigger>
@@ -118,14 +110,22 @@ const Index = () => {
                   dataKey="income"
                   stroke="#8e44ad"
                   strokeWidth={2}
-                  dot={{ strokeWidth: 2 }}
+                  dot={{ fill: "#8e44ad", strokeWidth: 2 }}
                 />
                 <Line
                   type="monotone"
                   dataKey="expenses"
                   stroke="#e91e63"
                   strokeWidth={2}
-                  dot={{ strokeWidth: 2 }}
+                  dot={{ fill: "#e91e63", strokeWidth: 2 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="forecast"
+                  stroke="#4CAF50"
+                  strokeDasharray="5 5"
+                  strokeWidth={2}
+                  dot={false}
                 />
               </LineChart>
             </ResponsiveContainer>

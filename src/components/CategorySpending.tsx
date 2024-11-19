@@ -58,7 +58,7 @@ const CategorySpending = () => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload;
                     return (
-                      <div className="bg-white p-2 rounded shadow dark:bg-gray-800 dark:text-white">
+                      <div className="bg-white/90 backdrop-blur-sm p-2 rounded shadow-lg border border-gray-200 dark:bg-gray-800/90 dark:border-gray-700 dark:text-white">
                         <p className="flex items-center gap-2">
                           <data.icon className="w-4 h-4" />
                           {data.name}
@@ -77,7 +77,7 @@ const CategorySpending = () => {
           {categories.map((category, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 text-sm dark:text-gray-300"
+              className="flex items-center gap-2 text-sm p-2 rounded bg-secondary/50 backdrop-blur-sm dark:bg-gray-700/50 dark:text-gray-300"
             >
               <div
                 className="w-3 h-3 rounded-full"
