@@ -56,6 +56,21 @@ const Index = () => {
           </span>
           <h1 className="text-4xl font-bold mb-2 dark:text-white">Фінансова панель управління</h1>
           <p className="text-muted-foreground dark:text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
+          
+          {/* Exchange Rates Card */}
+          <Card className="w-full max-w-sm mt-4 p-4">
+            <h3 className="font-semibold mb-2">Курси валют</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-muted-foreground">EUR/UAH</p>
+                <p className="text-lg font-bold">41.50</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">USD/UAH</p>
+                <p className="text-lg font-bold">38.50</p>
+              </div>
+            </div>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

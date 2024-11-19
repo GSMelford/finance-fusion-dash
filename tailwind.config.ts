@@ -48,6 +48,11 @@ export default {
           DEFAULT: "#ffffff",
           foreground: "#1e1e2f",
         },
+        // Adding new dark theme colors
+        "dark-purple": {
+          DEFAULT: "#1a1625",
+          foreground: "#ffffff",
+        },
       },
       borderRadius: {
         lg: "12px",
