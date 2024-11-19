@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { TrendingUp, DollarSign, CreditCard, AlertCircle, User } from "lucide-react";
+import { User } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CategorySpending from "@/components/CategorySpending";
 import TransactionPanel from "@/components/TransactionPanel";
@@ -70,9 +70,11 @@ const Index = () => {
             <span>Мій особистий кабінет</span>
           </Button>
         </div>
-          
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Exchange Rates Card */}
-        <Card className="w-full max-w-sm mt-4 p-4">
+        <Card className="p-4">
           <h3 className="font-semibold mb-2">Курси валют</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -85,9 +87,8 @@ const Index = () => {
             </div>
           </div>
         </Card>
-      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Income and Expenses Chart */}
         <Card className="col-span-2 p-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
@@ -131,7 +132,9 @@ const Index = () => {
             </ResponsiveContainer>
           </div>
         </Card>
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         <Card className="p-6 animate-fade-up [animation-delay:400ms] dark:bg-gray-800">
           <h2 className="text-xl font-semibold mb-6 dark:text-white">Ліміти категорій</h2>
           <div className="space-y-4">
@@ -153,18 +156,20 @@ const Index = () => {
             ))}
           </div>
         </Card>
+
+        <div className="lg:col-span-2">
+          <CategorySpending />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         <div className="lg:col-span-2">
-          <CategorySpending />
-        </div>
-        <div>
           <TransactionPanel />
         </div>
+        <div>
+          <SmartConclusions />
+        </div>
       </div>
-
-      <SmartConclusions />
     </div>
   );
 };
