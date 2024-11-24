@@ -8,49 +8,8 @@ import TransactionPanel from "@/components/TransactionPanel";
 import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
-
-const recentTransactions = [
-  { 
-    id: 1, 
-    type: "витрата", 
-    description: "Netflix Premium", 
-    amount: 450, 
-    date: "2024-04-10",
-    aiTip: "Ви можете заощадити, перейшовши на спільний сімейний план"
-  },
-  { 
-    id: 2, 
-    type: "витрата", 
-    description: "АТБ Маркет", 
-    amount: 1250, 
-    date: "2024-04-09",
-    aiTip: "Середній чек на 15% вище за звичайний"
-  },
-  { 
-    id: 3, 
-    type: "витрата", 
-    description: "Комунальні послуги", 
-    amount: 3200, 
-    date: "2024-04-08",
-    aiTip: "Споживання електроенергії зросло на 20% порівняно з минулим місяцем"
-  },
-  { 
-    id: 4, 
-    type: "витрата", 
-    description: "Сільпо", 
-    amount: 890, 
-    date: "2024-04-07",
-    aiTip: "Рекомендую звернути увагу на акційні пропозиції у цьому магазині"
-  },
-  { 
-    id: 5, 
-    type: "витрата", 
-    description: "Spotify Premium", 
-    amount: 270, 
-    date: "2024-04-06",
-    aiTip: "Доступний студентський план зі знижкою 50%"
-  }
-];
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { MessageCircle } from "lucide-react";
 
 const timeframeData = {
   week: [
@@ -77,6 +36,7 @@ const timeframeData = {
 
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
@@ -99,66 +59,80 @@ const Index = () => {
         <div className="lg:col-span-2">
           <SmartConclusions />
         </div>
-        <RecentTransactions />
+        <RecentTransactions className="h-full" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <TransactionPanel />
-        <Card className="col-span-2 p-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
-            <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
-              <TabsList className="bg-secondary/80 backdrop-blur-sm">
-                <TabsTrigger value="week">Тиждень</TabsTrigger>
-                <TabsTrigger value="month">Місяць</TabsTrigger>
-                <TabsTrigger value="quarter">3 місяці</TabsTrigger>
-              </TabsList>
-            </Tabs>
+      <Card className="p-6 mb-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800 col-span-full">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
+          <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
+            <TabsList className="bg-secondary/80 backdrop-blur-sm">
+              <TabsTrigger value="week">Тиждень</TabsTrigger>
+              <TabsTrigger value="month">Місяць</TabsTrigger>
+              <TabsTrigger value="quarter">3 місяці</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+        <div className="h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip content={<ChartTooltip />} />
+              <Line
+                type="monotone"
+                dataKey="income"
+                stroke="#8e44ad"
+                strokeWidth={2}
+                dot={{ fill: "#8e44ad", strokeWidth: 2 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="expenses"
+                stroke="#e91e63"
+                strokeWidth={2}
+                dot={{ fill: "#e91e63", strokeWidth: 2 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="forecast"
+                stroke="#4CAF50"
+                strokeDasharray="5 5"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <TransactionPanel />
+        </div>
+        <div className="lg:col-span-3">
+          <CategorySpending />
+        </div>
+      </div>
+
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+          <Button
+            size="icon"
+            className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary/90"
+          >
+            <MessageCircle className="w-6 h-6" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+          <div className="h-full flex flex-col">
+            <h2 className="text-xl font-semibold mb-4">Чат з ШІ-помічником</h2>
+            <div className="flex-grow bg-secondary/20 rounded-lg p-4 mb-4">
+              {/* Chat messages will go here */}
+            </div>
           </div>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip content={<ChartTooltip />} />
-                <Line
-                  type="monotone"
-                  dataKey="income"
-                  stroke="#8e44ad"
-                  strokeWidth={2}
-                  dot={{ fill: "#8e44ad", strokeWidth: 2 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="expenses"
-                  stroke="#e91e63"
-                  strokeWidth={2}
-                  dot={{ fill: "#e91e63", strokeWidth: 2 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="forecast"
-                  stroke="#4CAF50"
-                  strokeDasharray="5 5"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-      </div>
-
-      <div className="mb-6">
-        <CategorySpending />
-      </div>
-
-      <Button
-        className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary/90"
-        onClick={() => {}}
-      >
-        <span>💬</span>
-      </Button>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

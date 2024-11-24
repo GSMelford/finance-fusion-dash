@@ -84,11 +84,15 @@ const recentTransactions = [
   }
 ];
 
-const RecentTransactions = () => {
+interface RecentTransactionsProps {
+  className?: string;
+}
+
+const RecentTransactions = ({ className }: RecentTransactionsProps) => {
   return (
-    <Card className="p-6 animate-fade-up dark:bg-gray-800">
+    <Card className={`p-6 animate-fade-up dark:bg-gray-800 ${className}`}>
       <h3 className="text-xl font-semibold mb-4 dark:text-white">Останні транзакції</h3>
-      <ScrollArea className="h-[300px] pr-4">
+      <ScrollArea className="h-[calc(100%-4rem)]">
         <div className="space-y-3">
           {recentTransactions.map((transaction) => (
             <div
