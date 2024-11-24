@@ -8,6 +8,7 @@ const conclusions = [
     icon: PiggyBank,
     date: "2024-04-10",
     emoji: "🛒",
+    mood: "😊",
     bgColor: "bg-green-500/10",
     textColor: "text-green-600",
     borderColor: "border-green-500/20"
@@ -18,6 +19,7 @@ const conclusions = [
     icon: TrendingUp,
     date: "2024-04-09",
     emoji: "📈",
+    mood: "🎉",
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-600",
     borderColor: "border-blue-500/20"
@@ -28,6 +30,7 @@ const conclusions = [
     icon: Target,
     date: "2024-04-08",
     emoji: "🎯",
+    mood: "💪",
     bgColor: "bg-purple-500/10",
     textColor: "text-purple-600",
     borderColor: "border-purple-500/20"
@@ -38,6 +41,7 @@ const conclusions = [
     icon: ChartBar,
     date: "2024-04-07",
     emoji: "📊",
+    mood: "🤔",
     bgColor: "bg-orange-500/10",
     textColor: "text-orange-600",
     borderColor: "border-orange-500/20"
@@ -48,6 +52,7 @@ const conclusions = [
     icon: Calculator,
     date: "2024-04-06",
     emoji: "💰",
+    mood: "😎",
     bgColor: "bg-teal-500/10",
     textColor: "text-teal-600",
     borderColor: "border-teal-500/20"
@@ -58,6 +63,7 @@ const conclusions = [
     icon: Sparkles,
     date: "2024-04-05",
     emoji: "✨",
+    mood: "🤓",
     bgColor: "bg-pink-500/10",
     textColor: "text-pink-600",
     borderColor: "border-pink-500/20"
@@ -72,7 +78,7 @@ const SmartConclusions = () => {
         {conclusions.map((conclusion, index) => (
           <div
             key={index}
-            className={`p-4 rounded-lg ${conclusion.bgColor} backdrop-blur-sm hover:scale-[1.02] transition-all border ${conclusion.borderColor}`}
+            className={`relative flex flex-col min-h-[200px] p-4 rounded-lg ${conclusion.bgColor} backdrop-blur-sm hover:scale-[1.02] transition-all border ${conclusion.borderColor}`}
           >
             <div className="flex items-center gap-3 mb-2">
               <div className={`p-2 rounded-full bg-primary/10`}>
@@ -82,10 +88,13 @@ const SmartConclusions = () => {
                 {conclusion.emoji} {conclusion.title}
               </h3>
             </div>
-            <p className="text-gray-300 text-sm ml-8">{conclusion.description}</p>
-            <p className={`text-xs mt-2 ${conclusion.textColor} opacity-75`}>
-              {new Date(conclusion.date).toLocaleDateString("uk-UA")}
-            </p>
+            <p className="text-gray-300 text-sm ml-8 mb-4">{conclusion.description}</p>
+            <div className="mt-auto flex justify-between items-center">
+              <p className={`text-xs ${conclusion.textColor} opacity-75`}>
+                {new Date(conclusion.date).toLocaleDateString("uk-UA")}
+              </p>
+              <span className="text-lg" title="Настрій">{conclusion.mood}</span>
+            </div>
           </div>
         ))}
       </div>
