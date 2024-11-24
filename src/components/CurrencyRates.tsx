@@ -28,7 +28,7 @@ const CurrencyRates = () => {
   });
 
   return (
-    <Card className="p-6 animate-fade-up dark:bg-gray-800 border-2 border-primary/30">
+    <Card className="p-6 animate-fade-up bg-gray-800/80 backdrop-blur-sm border-2 border-primary/30 shadow-[0_0_15px_rgba(155,135,245,0.3)]">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Фінансова інформація</h2>
       
       <div className="space-y-6">

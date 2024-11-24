@@ -79,7 +79,7 @@ export default {
         "fade-in": "fade-in 0.3s ease-out"
       },
       boxShadow: {
-        'glow': '0 0 15px rgba(142,68,173,0.3)',
+        'glow': '0 0 15px rgba(155,135,245,0.3)',
       }
     },
   },
