@@ -1,20 +1,21 @@
 import { Card } from "./ui/card";
+import { PiggyBank, TrendingUp, Calculator } from "lucide-react";
 
 const conclusions = [
   {
     title: "Економія на витратах",
     description: "Оптимізація витрат може заощадити до 20% щомісяця.",
-    icon: () => <IconSavings />,
+    icon: PiggyBank,
   },
   {
     title: "Збільшення доходів",
     description: "Розгляньте можливості для додаткового доходу.",
-    icon: () => <IconIncome />,
+    icon: TrendingUp,
   },
   {
     title: "Бюджетування",
     description: "Встановіть реалістичний бюджет для управління фінансами.",
-    icon: () => <IconBudget />,
+    icon: Calculator,
   },
 ];
 
@@ -29,7 +30,7 @@ const SmartConclusions = () => {
             className="p-4 rounded-lg bg-muted/80 backdrop-blur-sm hover:bg-muted/90 transition-colors"
           >
             <div className="flex items-center gap-3 mb-2">
-              <conclusion.icon className="w-5 h-5 text-primary" />
+              <conclusion.icon size={20} className="text-primary" />
               <h3 className="font-medium text-gray-200">{conclusion.title}</h3>
             </div>
             <p className="text-gray-300 text-sm ml-8">{conclusion.description}</p>
