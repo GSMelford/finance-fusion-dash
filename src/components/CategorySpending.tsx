@@ -86,7 +86,7 @@ const CategorySpending = () => {
     <Card className="p-6 animate-fade-up dark:bg-gray-800 w-full">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Витрати за категоріями</h2>
       <div className="flex flex-col lg:flex-row items-start gap-8">
-        <div className="w-full lg:w-2/5 h-[600px] overflow-y-auto pr-4 space-y-4">
+        <div className="w-full lg:w-2/5 max-h-[calc(100vh-300px)] overflow-y-auto pr-4 space-y-4">
           {categories.map((category, index) => (
             <div
               key={index}
