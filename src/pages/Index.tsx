@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CategorySpending from "@/components/CategorySpending";
-import TransactionPanel from "@/components/TransactionPanel";
 import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MessageCircle } from "lucide-react";
+import { categories } from "@/components/CategorySpending";
 
 const timeframeData = {
   week: [
@@ -34,9 +34,13 @@ const timeframeData = {
   ],
 };
 
+const categoryData = categories.map(cat => ({
+  name: cat.name,
+  amount: cat.value
+}));
+
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
@@ -59,61 +63,72 @@ const Index = () => {
         <div className="lg:col-span-2">
           <SmartConclusions />
         </div>
-        <RecentTransactions className="h-[600px] overflow-hidden" />
+        <RecentTransactions className="h-[600px] overflow-auto" />
       </div>
 
-      <Card className="p-6 mb-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800 w-full">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
-          <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
-            <TabsList className="bg-secondary/80 backdrop-blur-sm">
-              <TabsTrigger value="week">Тиждень</TabsTrigger>
-              <TabsTrigger value="month">Місяць</TabsTrigger>
-              <TabsTrigger value="quarter">3 місяці</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-        <div className="h-[400px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip content={<ChartTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="income"
-                name="Доходи"
-                stroke="#8e44ad"
-                strokeWidth={2}
-                dot={{ fill: "#8e44ad", strokeWidth: 2 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="expenses"
-                name="Витрати"
-                stroke="#e91e63"
-                strokeWidth={2}
-                dot={{ fill: "#e91e63", strokeWidth: 2 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="forecast"
-                name="Прогноз"
-                stroke="#4CAF50"
-                strokeDasharray="5 5"
-                strokeWidth={2}
-                dot={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </Card>
+      <div className="grid grid-cols-1 gap-6 mb-6">
+        <Card className="p-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
+            <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
+              <TabsList className="bg-secondary/80 backdrop-blur-sm">
+                <TabsTrigger value="week">Тиждень</TabsTrigger>
+                <TabsTrigger value="month">Місяць</TabsTrigger>
+                <TabsTrigger value="quarter">3 місяці</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="h-[400px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip content={<ChartTooltip />} />
+                  <Line
+                    type="monotone"
+                    dataKey="income"
+                    name="Доходи"
+                    stroke="#8e44ad"
+                    strokeWidth={2}
+                    dot={{ fill: "#8e44ad", strokeWidth: 2 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="expenses"
+                    name="Витрати"
+                    stroke="#e91e63"
+                    strokeWidth={2}
+                    dot={{ fill: "#e91e63", strokeWidth: 2 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="forecast"
+                    name="Прогноз"
+                    stroke="#4CAF50"
+                    strokeDasharray="5 5"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="h-[400px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={categoryData}>
+                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="amount" fill="#8b5cf6" name="Сума" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </Card>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
-        <div className="space-y-6">
-          <CategorySpending />
-          <TransactionPanel />
-        </div>
+      <div className="space-y-6">
+        <CategorySpending />
       </div>
 
       <Sheet>

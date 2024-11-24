@@ -5,6 +5,7 @@ import {
   TrendingUp, TrendingDown
 } from "lucide-react";
 import { Card } from "./ui/card";
+import TransactionPanel from "./TransactionPanel";
 
 export const categories = [
   { 
@@ -85,48 +86,7 @@ const CategorySpending = () => {
     <Card className="p-6 animate-fade-up dark:bg-gray-800">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Витрати за категоріями</h2>
       <div className="flex flex-col lg:flex-row items-start gap-8">
-        <div className="w-full lg:w-1/2 h-[400px] relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-            <p className="text-2xl font-bold dark:text-white">₴{total.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground">Загальні витрати</p>
-          </div>
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie
-                data={categories}
-                innerRadius={80}
-                outerRadius={120}
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {categories.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                content={({ active, payload }) => {
-                  if (active && payload && payload.length) {
-                    const data = payload[0].payload;
-                    return (
-                      <div className="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-gray-200 dark:bg-gray-800/90 dark:border-gray-700 dark:text-white">
-                        <p className="flex items-center gap-2 mb-1">
-                          <data.icon className="w-4 h-4" />
-                          {data.name}
-                        </p>
-                        <p className="font-semibold">₴{data.value.toLocaleString()}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {((data.value / total) * 100).toFixed(1)}% від загальних витрат
-                        </p>
-                      </div>
-                    );
-                  }
-                  return null;
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="w-full lg:w-1/2 space-y-4">
+        <div className="w-full lg:w-2/5 space-y-4">
           {categories.map((category, index) => (
             <div
               key={index}
@@ -153,6 +113,50 @@ const CategorySpending = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="w-full lg:w-3/5 flex flex-col gap-8">
+          <div className="h-[400px] relative">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+              <p className="text-2xl font-bold dark:text-white">₴{total.toLocaleString()}</p>
+              <p className="text-sm text-muted-foreground">Загальні витрати</p>
+            </div>
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={categories}
+                  innerRadius={80}
+                  outerRadius={120}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {categories.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-gray-200 dark:bg-gray-800/90 dark:border-gray-700 dark:text-white">
+                          <p className="flex items-center gap-2 mb-1">
+                            <data.icon className="w-4 h-4" />
+                            {data.name}
+                          </p>
+                          <p className="font-semibold">₴{data.value.toLocaleString()}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {((data.value / total) * 100).toFixed(1)}% від загальних витрат
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <TransactionPanel />
         </div>
       </div>
     </Card>
