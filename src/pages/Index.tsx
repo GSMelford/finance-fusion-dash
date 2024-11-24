@@ -99,13 +99,11 @@ const Index = () => {
         <div className="lg:col-span-2">
           <SmartConclusions />
         </div>
-        <div>
-          <TransactionPanel />
-        </div>
+        <RecentTransactions />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <RecentTransactions />
+        <TransactionPanel />
         <Card className="col-span-2 p-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>

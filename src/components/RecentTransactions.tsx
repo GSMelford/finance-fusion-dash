@@ -12,6 +12,14 @@ const recentTransactions = [
   },
   {
     id: 2,
+    type: "дохід",
+    description: "Зарплата",
+    amount: 45000,
+    date: "2024-04-09",
+    aiTip: "Рекомендуємо відкласти 20% на заощадження"
+  },
+  {
+    id: 3,
     type: "витрата",
     description: "АТБ Маркет",
     amount: 1250,
@@ -19,7 +27,7 @@ const recentTransactions = [
     aiTip: "Середній чек на 15% вище за звичайний"
   },
   {
-    id: 3,
+    id: 4,
     type: "витрата",
     description: "Комунальні послуги",
     amount: 3200,
@@ -27,7 +35,15 @@ const recentTransactions = [
     aiTip: "Споживання електроенергії зросло на 20% порівняно з минулим місяцем"
   },
   {
-    id: 4,
+    id: 5,
+    type: "дохід",
+    description: "Фріланс проект",
+    amount: 12000,
+    date: "2024-04-08",
+    aiTip: "Чудова додаткова можливість для збільшення доходу"
+  },
+  {
+    id: 6,
     type: "витрата",
     description: "Сільпо",
     amount: 890,
@@ -35,12 +51,36 @@ const recentTransactions = [
     aiTip: "Рекомендую звернути увагу на акційні пропозиції у цьому магазині"
   },
   {
-    id: 5,
+    id: 7,
     type: "витрата",
     description: "Spotify Premium",
     amount: 270,
     date: "2024-04-06",
     aiTip: "Доступний студентський план зі знижкою 50%"
+  },
+  {
+    id: 8,
+    type: "дохід",
+    description: "Повернення податків",
+    amount: 3500,
+    date: "2024-04-05",
+    aiTip: "Чудова можливість поповнити заощадження"
+  },
+  {
+    id: 9,
+    type: "витрата",
+    description: "Спортзал",
+    amount: 1200,
+    date: "2024-04-04",
+    aiTip: "Річний абонемент дозволить заощадити 20%"
+  },
+  {
+    id: 10,
+    type: "дохід",
+    description: "Пасивний дохід",
+    amount: 2500,
+    date: "2024-04-03",
+    aiTip: "Розгляньте можливість реінвестування"
   }
 ];
 
@@ -53,11 +93,19 @@ const RecentTransactions = () => {
           {recentTransactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="bg-red-500/10 dark:bg-red-500/20 p-3 rounded-lg"
+              className={`${
+                transaction.type === "витрата" 
+                  ? "bg-red-500/10 dark:bg-red-500/20" 
+                  : "bg-green-500/10 dark:bg-green-500/20"
+              } p-3 rounded-lg`}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-red-600 dark:text-red-400">
+                  <p className={`text-sm font-medium ${
+                    transaction.type === "витрата" 
+                      ? "text-red-600 dark:text-red-400" 
+                      : "text-green-600 dark:text-green-400"
+                  }`}>
                     {transaction.description}
                   </p>
                   <p className="text-xs text-muted-foreground">
@@ -65,8 +113,12 @@ const RecentTransactions = () => {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-medium text-red-600 dark:text-red-400">
-                    -₴{transaction.amount.toLocaleString()}
+                  <p className={`text-sm font-medium ${
+                    transaction.type === "витрата" 
+                      ? "text-red-600 dark:text-red-400" 
+                      : "text-green-600 dark:text-green-400"
+                  }`}>
+                    {transaction.type === "витрата" ? "-" : "+"}₴{transaction.amount.toLocaleString()}
                   </p>
                 </div>
               </div>
