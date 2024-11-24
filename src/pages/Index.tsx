@@ -40,7 +40,7 @@ const Index = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
+    <div className="min-h-screen bg-dark-purple p-6 md:p-8">
       <CurrencyRates />
 
       <header className="mb-8 animate-fade-up">
@@ -49,8 +49,8 @@ const Index = () => {
             <span className="text-sm font-medium text-primary px-3 py-1 rounded-full bg-primary/10 mb-2">
               Фінансова панель
             </span>
-            <h1 className="text-4xl font-bold mb-2 dark:text-white">Фінансова панель управління</h1>
-            <p className="text-muted-foreground dark:text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
+            <h1 className="text-4xl font-bold mb-2 text-white">Фінансова панель управління</h1>
+            <p className="text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
           </div>
           <div className="flex items-center gap-4">
             <Button
@@ -76,11 +76,11 @@ const Index = () => {
         <div className="lg:col-span-2">
           <SmartConclusions />
         </div>
-        <RecentTransactions className="h-[600px] overflow-auto" />
+        <RecentTransactions className="h-[600px] overflow-auto glass-card shadow-glow" />
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-6">
-        <Card className="p-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800">
+        <Card className="p-6 animate-fade-up [animation-delay:200ms] glass-card shadow-glow">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
             <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>

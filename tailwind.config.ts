@@ -29,26 +29,25 @@ export default {
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#f6f6f7",
-          foreground: "#1e1e2f",
+          DEFAULT: "#1e1e2f",
+          foreground: "#ffffff",
         },
         destructive: {
           DEFAULT: "#ef4444",
           foreground: "#ffffff",
         },
         muted: {
-          DEFAULT: "#f3f4f6",
+          DEFAULT: "#1a1625",
           foreground: "#6b7280",
         },
         accent: {
-          DEFAULT: "#f6f6f7",
-          foreground: "#1e1e2f",
+          DEFAULT: "#1e1e2f",
+          foreground: "#ffffff",
         },
         card: {
-          DEFAULT: "#ffffff",
-          foreground: "#1e1e2f",
+          DEFAULT: "#1a1625",
+          foreground: "#ffffff",
         },
-        // Adding new dark theme colors
         "dark-purple": {
           DEFAULT: "#1a1625",
           foreground: "#ffffff",
@@ -78,6 +77,9 @@ export default {
       animation: {
         "fade-up": "fade-up 0.5s ease-out",
         "fade-in": "fade-in 0.3s ease-out"
+      },
+      boxShadow: {
+        'glow': '0 0 15px rgba(142,68,173,0.3)',
       }
     },
   },
