@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Zap } from "lucide-react";
 import { getCategoryLimits } from "@/utils/localStorage";
 import { convertToUAH } from "@/utils/currency";
+import { toast } from "sonner";
+import { financialTips } from "@/utils/financialTips";
 
 const insights = [
   {
@@ -52,14 +55,36 @@ const insights = [
 const SmartConclusions = () => {
   const limits = getCategoryLimits();
 
+  useEffect(() => {
+    // Show random tip every 5 minutes
+    const showRandomTip = () => {
+      const randomTip = financialTips[Math.floor(Math.random() * financialTips.length)];
+      toast(randomTip, {
+        duration: 10000,
+      });
+    };
+
+    // Show first tip after 1 minute
+    const initialTimeout = setTimeout(showRandomTip, 60000);
+    
+    // Show tips every 5 minutes
+    const interval = setInterval(showRandomTip, 300000);
+
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
-    <Card className="p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800 shadow-lg border-2 border-primary/20">
+    <Card className="p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800 shadow-lg border-2 border-primary/20 h-full">
       <div className="flex items-center space-x-2 text-amber-500 mb-6">
         <Zap className="w-6 h-6" />
         <h2 className="text-2xl font-bold text-amber-500">Розумні висновки</h2>
       </div>
-      <ScrollArea className="h-[500px] pr-4">
-        <div className="space-y-6">
+      
+      <div className="flex flex-col h-[calc(100%-4rem)] gap-6">
+        <ScrollArea className="flex-grow pr-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {insights.map((insight, index) => (
               <div
@@ -79,24 +104,24 @@ const SmartConclusions = () => {
               </div>
             ))}
           </div>
+        </ScrollArea>
 
-          {limits.length > 0 && (
-            <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-4 text-gray-200">Встановлені ліміти витрат</h3>
-              <div className="space-y-3">
-                {limits.map((limit, index) => (
-                  <div key={index} className="p-3 bg-secondary/50 rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-300">{limit.category}</span>
-                      <span className="font-medium text-primary">₴{convertToUAH(limit.limit)}</span>
-                    </div>
+        {limits.length > 0 && (
+          <div className="mt-auto">
+            <h3 className="text-lg font-semibold mb-4 text-gray-200">Встановлені ліміти витрат</h3>
+            <div className="space-y-3">
+              {limits.map((limit, index) => (
+                <div key={index} className="p-3 bg-secondary/50 rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-300">{limit.category}</span>
+                    <span className="font-medium text-primary">₴{convertToUAH(limit.limit)}</span>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
-      </ScrollArea>
+          </div>
+        )}
+      </div>
     </Card>
   );
 };
