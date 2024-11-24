@@ -10,6 +10,7 @@ import ChartTooltip from "@/components/ChartTooltip";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import AIChatPanel from "@/components/AIChatPanel";
+import CategoryLimitsManager from "@/components/CategoryLimitsManager";
 
 const timeframeData = {
   week: [
@@ -138,8 +139,9 @@ const Index = () => {
         </Card>
       </div>
 
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <CategorySpending />
+        <CategoryLimitsManager />
       </div>
 
       <AIChatPanel />
