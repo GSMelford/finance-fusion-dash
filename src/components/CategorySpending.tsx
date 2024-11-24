@@ -2,10 +2,11 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { 
   ShoppingCart, Coffee, Car, Plane,
   Heart, Gift, HomeIcon, Gamepad,
-  TrendingUp, TrendingDown
+  TrendingUp, TrendingDown, Plus
 } from "lucide-react";
 import { Card } from "./ui/card";
-import TransactionPanel from "./TransactionPanel";
+import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const categories = [
   { 
@@ -80,26 +81,27 @@ const COLORS = [
 ];
 
 const CategorySpending = () => {
+  const navigate = useNavigate();
   const total = categories.reduce((sum, cat) => sum + cat.value, 0);
 
   return (
-    <Card className="p-6 animate-fade-up bg-gray-800/80 backdrop-blur-sm border-2 border-primary/30 shadow-[0_0_15px_rgba(155,135,245,0.3)] w-full">
+    <Card className="p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow w-full">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Витрати за категоріями</h2>
       <div className="flex flex-col lg:flex-row items-start gap-8">
         <div className="w-full lg:w-2/5 max-h-[calc(100vh-300px)] overflow-y-auto pr-4 space-y-4">
           {categories.map((category, index) => (
             <div
               key={index}
-              className="p-4 rounded-lg bg-secondary/50 backdrop-blur-sm hover:bg-secondary/70 transition-colors dark:bg-gray-700/50 dark:text-gray-300"
+              className={`p-4 rounded-lg ${COLORS[index % COLORS.length].replace('#', 'bg-[#')}33] hover:${COLORS[index % COLORS.length].replace('#', 'bg-[#')}4D] transition-colors`}
             >
               <div className="flex items-center gap-3 mb-2">
                 <div
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: COLORS[index % COLORS.length] }}
                 />
-                <category.icon className="w-4 h-4" />
-                <span className="font-medium">{category.name}</span>
-                <span className="ml-auto font-semibold">₴{category.value.toLocaleString()}</span>
+                <category.icon className="w-4 h-4" style={{ color: COLORS[index % COLORS.length] }} />
+                <span className="font-medium text-white">{category.name}</span>
+                <span className="ml-auto font-semibold text-white">₴{category.value.toLocaleString()}</span>
                 {category.trendType === "positive" && (
                   <TrendingDown className="w-4 h-4 text-green-500" />
                 )}
@@ -108,8 +110,8 @@ const CategorySpending = () => {
                 )}
               </div>
               <div className="ml-6 text-sm space-y-1">
-                <p className="text-muted-foreground">{category.trend}</p>
-                <p className="text-blue-600 dark:text-blue-400 text-xs">{category.analysis}</p>
+                <p className="text-gray-300">{category.trend}</p>
+                <p className="text-blue-400 text-xs">{category.analysis}</p>
               </div>
             </div>
           ))}
@@ -156,7 +158,13 @@ const CategorySpending = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <TransactionPanel />
+          <Button 
+            onClick={() => navigate("/add-transaction")} 
+            className="w-full flex items-center justify-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Додати транзакцію
+          </Button>
         </div>
       </div>
     </Card>

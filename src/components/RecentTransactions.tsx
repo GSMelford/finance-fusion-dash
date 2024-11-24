@@ -90,9 +90,9 @@ interface RecentTransactionsProps {
 
 const RecentTransactions = ({ className }: RecentTransactionsProps) => {
   return (
-    <Card className={`p-6 animate-fade-up bg-gray-800/80 backdrop-blur-sm border-2 border-primary/30 shadow-[0_0_15px_rgba(155,135,245,0.3)] h-full ${className}`}>
+    <Card className={`p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow h-[calc(100vh-16rem)] ${className}`}>
       <h3 className="text-xl font-semibold mb-4 dark:text-white">Останні транзакції</h3>
-      <ScrollArea className="h-[calc(100%-4rem)]">
+      <ScrollArea className="h-[calc(100%-2rem)]">
         <div className="space-y-3">
           {recentTransactions.map((transaction) => (
             <div
