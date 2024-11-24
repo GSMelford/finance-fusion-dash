@@ -1,36 +1,66 @@
 import { Card } from "./ui/card";
-import { Sparkles, PiggyBank, TrendingUp, Calculator, Target, ChartBar } from "lucide-react";
+import { PiggyBank, TrendingUp, Target, ChartBar, Calculator, Sparkles } from "lucide-react";
 
 const conclusions = [
   {
     title: "Економія на витратах",
-    description: "Оптимізація щоденних витрат може заощадити до 20% щомісяця. Почніть з малого!",
+    description: "За останній місяць ви витратили менше на продукти. Продовжуйте планувати покупки заздалегідь!",
     icon: PiggyBank,
+    date: "2024-04-10",
+    emoji: "🛒",
+    bgColor: "bg-green-500/10",
+    textColor: "text-green-600",
+    borderColor: "border-green-500/20"
   },
   {
     title: "Зростання доходів",
-    description: "Ваш дохід має потенціал до зростання на 15% через додаткові джерела та інвестиції.",
+    description: "Ваш дохід зріс на 15% порівняно з минулим місяцем. Відмінна робота!",
     icon: TrendingUp,
+    date: "2024-04-09",
+    emoji: "📈",
+    bgColor: "bg-blue-500/10",
+    textColor: "text-blue-600",
+    borderColor: "border-blue-500/20"
   },
   {
-    title: "Розумне планування",
-    description: "Встановлення чітких фінансових цілей допоможе досягти бажаного результату швидше.",
+    title: "Фінансові цілі",
+    description: "Ви на 60% досягли мети щодо накопичень. Залишилось ще трохи!",
     icon: Target,
+    date: "2024-04-08",
+    emoji: "🎯",
+    bgColor: "bg-purple-500/10",
+    textColor: "text-purple-600",
+    borderColor: "border-purple-500/20"
   },
   {
-    title: "Фінансова аналітика",
-    description: "Регулярний аналіз витрат допомагає виявити приховані можливості для економії.",
+    title: "Аналіз витрат",
+    description: "Найбільше витрат у категорії 'Розваги'. Спробуйте встановити ліміт на цю категорію.",
     icon: ChartBar,
+    date: "2024-04-07",
+    emoji: "📊",
+    bgColor: "bg-orange-500/10",
+    textColor: "text-orange-600",
+    borderColor: "border-orange-500/20"
   },
   {
     title: "Бюджетування",
-    description: "Створіть гнучкий бюджет, який враховує ваші потреби та цілі. Це ключ до успіху!",
+    description: "Ви дотримуєтесь бюджету вже 2 тижні поспіль. Так тримати!",
     icon: Calculator,
+    date: "2024-04-06",
+    emoji: "💰",
+    bgColor: "bg-teal-500/10",
+    textColor: "text-teal-600",
+    borderColor: "border-teal-500/20"
   },
   {
     title: "Розумні поради",
-    description: "Використовуйте наші персоналізовані рекомендації для покращення фінансового стану.",
+    description: "Рекомендуємо відкрити депозитний рахунок для ваших заощаджень.",
     icon: Sparkles,
+    date: "2024-04-05",
+    emoji: "✨",
+    bgColor: "bg-pink-500/10",
+    textColor: "text-pink-600",
+    borderColor: "border-pink-500/20"
   }
 ];
 
@@ -42,15 +72,20 @@ const SmartConclusions = () => {
         {conclusions.map((conclusion, index) => (
           <div
             key={index}
-            className="p-4 rounded-lg bg-muted/50 backdrop-blur-sm hover:bg-muted/70 transition-all hover:scale-[1.02] border border-primary/10"
+            className={`p-4 rounded-lg ${conclusion.bgColor} backdrop-blur-sm hover:scale-[1.02] transition-all border ${conclusion.borderColor}`}
           >
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-full bg-primary/10">
-                <conclusion.icon size={20} className="text-primary" />
+              <div className={`p-2 rounded-full bg-primary/10`}>
+                <conclusion.icon size={20} className={conclusion.textColor} />
               </div>
-              <h3 className="font-medium text-gray-200">{conclusion.title}</h3>
+              <h3 className={`font-medium ${conclusion.textColor}`}>
+                {conclusion.emoji} {conclusion.title}
+              </h3>
             </div>
             <p className="text-gray-300 text-sm ml-8">{conclusion.description}</p>
+            <p className={`text-xs mt-2 ${conclusion.textColor} opacity-75`}>
+              {new Date(conclusion.date).toLocaleDateString("uk-UA")}
+            </p>
           </div>
         ))}
       </div>
