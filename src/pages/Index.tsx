@@ -11,6 +11,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import AIChatPanel from "@/components/AIChatPanel";
 import CategoryLimitsManager from "@/components/CategoryLimitsManager";
+import CurrencyRates from "@/components/CurrencyRates";
 
 const timeframeData = {
   week: [
@@ -139,9 +140,9 @@ const Index = () => {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 mb-6">
-        <CategorySpending />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <CategoryLimitsManager />
+        <CurrencyRates />
       </div>
 
       <AIChatPanel />
