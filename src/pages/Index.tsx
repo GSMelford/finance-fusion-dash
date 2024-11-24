@@ -9,7 +9,6 @@ import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import CurrencyRates from "@/components/CurrencyRates";
 import AIChatPanel from "@/components/AIChatPanel";
 
 const timeframeData = {
@@ -40,9 +39,7 @@ const Index = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-dark-purple p-6 md:p-8">
-      <CurrencyRates />
-
+    <div className="min-h-screen bg-[#2A2438] p-6 md:p-8">
       <header className="mb-8 animate-fade-up">
         <div className="flex justify-between items-center mb-6">
           <div className="flex flex-col">
@@ -50,7 +47,7 @@ const Index = () => {
               Фінансова панель
             </span>
             <h1 className="text-4xl font-bold mb-2 text-white">Фінансова панель управління</h1>
-            <p className="text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
+            <p className="text-gray-300">Відстежуйте свої витрати та доходи в одному місці</p>
           </div>
           <div className="flex items-center gap-4">
             <Button
@@ -65,7 +62,7 @@ const Index = () => {
                 <Moon className="h-5 w-5" />
               )}
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2 text-gray-200">
               <span>Мій особистий кабінет</span>
             </Button>
           </div>
