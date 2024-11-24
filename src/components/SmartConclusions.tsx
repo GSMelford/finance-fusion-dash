@@ -52,7 +52,7 @@ const SmartConclusions = () => {
     <Card className="p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800 shadow-lg border-2 border-primary/20">
       <div className="flex items-center space-x-2 text-amber-500 mb-6">
         <Zap className="w-6 h-6" />
-        <h2 className="text-2xl font-bold dark:text-white">Розумні висновки</h2>
+        <h2 className="text-2xl font-bold text-gray-800">Розумні висновки</h2>
       </div>
       <ScrollArea className="h-[500px] pr-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -63,7 +63,7 @@ const SmartConclusions = () => {
             >
               <div className="flex items-center space-x-3 mb-3">
                 <span className="text-2xl">{insight.icon}</span>
-                <h3 className="font-semibold text-lg dark:text-white">{insight.title}</h3>
+                <h3 className="font-semibold text-lg text-gray-800">{insight.title}</h3>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{insight.content}</p>
               <div className="mt-2">

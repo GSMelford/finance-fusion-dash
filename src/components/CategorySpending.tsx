@@ -138,13 +138,13 @@ const CategorySpending = () => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-gray-200 dark:bg-gray-800/90 dark:border-gray-700 dark:text-white">
-                          <p className="flex items-center gap-2 mb-1">
+                        <div className="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-gray-200 dark:bg-gray-800/90 dark:border-gray-700">
+                          <p className="flex items-center gap-2 mb-1 text-gray-800">
                             <data.icon className="w-4 h-4" />
                             {data.name}
                           </p>
-                          <p className="font-semibold">₴{data.value.toLocaleString()}</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="font-semibold text-gray-800">₴{data.value.toLocaleString()}</p>
+                          <p className="text-sm text-gray-600">
                             {((data.value / total) * 100).toFixed(1)}% від загальних витрат
                           </p>
                         </div>
