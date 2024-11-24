@@ -1,7 +1,8 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { 
   ShoppingCart, Coffee, Car, Plane,
-  Heart, Gift, HomeIcon, Gamepad
+  Heart, Gift, HomeIcon, Gamepad,
+  TrendingUp, TrendingDown
 } from "lucide-react";
 import { Card } from "./ui/card";
 
@@ -11,56 +12,64 @@ export const categories = [
     value: 15000, 
     icon: ShoppingCart,
     analysis: "Найбільша категорія витрат. Рекомендуємо використовувати програми лояльності та купувати оптом для економії.",
-    trend: "↗️ На 12% більше ніж минулого місяця"
+    trend: "↗️ На 12% більше ніж минулого місяця",
+    trendType: "negative"
   },
   { 
     name: "Кафе та ресторани", 
     value: 8000, 
     icon: Coffee,
     analysis: "Витрати в межах норми. Використовуйте години знижок та спеціальні пропозиції.",
-    trend: "→ Стабільно відносно минулого місяця"
+    trend: "→ Стабільно відносно минулого місяця",
+    trendType: "neutral"
   },
   { 
     name: "Авто та транспорт", 
     value: 7000, 
     icon: Car,
     analysis: "Можливість оптимізації через використання громадського транспорту в непікові години.",
-    trend: "↘️ На 5% менше ніж минулого місяця"
+    trend: "↘️ На 5% менше ніж минулого місяця",
+    trendType: "positive"
   },
   { 
     name: "Подорожі", 
     value: 10000, 
     icon: Plane,
     analysis: "Сезонні витрати. Рекомендуємо планувати подорожі заздалегідь для кращих цін.",
-    trend: "↗️ Сезонне зростання"
+    trend: "↗️ Сезонне зростання",
+    trendType: "negative"
   },
   { 
     name: "Здоров'я та спорт", 
     value: 6000, 
     icon: Heart,
     analysis: "Інвестиція в здоров'я. Розгляньте довгострокові абонементи для економії.",
-    trend: "→ В межах запланованого бюджету"
+    trend: "→ В межах запланованого бюджету",
+    trendType: "neutral"
   },
   { 
     name: "Подарунки", 
     value: 4500, 
     icon: Gift,
     analysis: "Нижче середнього рівня витрат. Можливість створити фонд для майбутніх свят.",
-    trend: "↘️ Зменшення після святкового сезону"
+    trend: "↘️ Зменшення після святкового сезону",
+    trendType: "positive"
   },
   { 
     name: "Дім та комуналка", 
     value: 9000, 
     icon: HomeIcon,
     analysis: "Є потенціал для економії через енергоефективні рішення.",
-    trend: "↗️ Сезонне підвищення через опалення"
+    trend: "↗️ Сезонне підвищення через опалення",
+    trendType: "negative"
   },
   { 
     name: "Розваги", 
     value: 5000, 
     icon: Gamepad,
     analysis: "Збалансовані витрати. Розгляньте підписки замість разових покупок.",
-    trend: "→ Стабільний рівень витрат"
+    trend: "→ Стабільний рівень витрат",
+    trendType: "neutral"
   },
 ];
 
@@ -70,11 +79,17 @@ const COLORS = [
 ];
 
 const CategorySpending = () => {
+  const total = categories.reduce((sum, cat) => sum + cat.value, 0);
+
   return (
     <Card className="p-6 animate-fade-up dark:bg-gray-800">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Витрати за категоріями</h2>
       <div className="flex flex-col lg:flex-row items-start gap-8">
-        <div className="w-full lg:w-1/2 h-[400px]">
+        <div className="w-full lg:w-1/2 h-[400px] relative">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+            <p className="text-2xl font-bold dark:text-white">₴{total.toLocaleString()}</p>
+            <p className="text-sm text-muted-foreground">Загальні витрати</p>
+          </div>
           <ResponsiveContainer>
             <PieChart>
               <Pie
@@ -99,6 +114,9 @@ const CategorySpending = () => {
                           {data.name}
                         </p>
                         <p className="font-semibold">₴{data.value.toLocaleString()}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {((data.value / total) * 100).toFixed(1)}% від загальних витрат
+                        </p>
                       </div>
                     );
                   }
@@ -122,6 +140,12 @@ const CategorySpending = () => {
                 <category.icon className="w-4 h-4" />
                 <span className="font-medium">{category.name}</span>
                 <span className="ml-auto font-semibold">₴{category.value.toLocaleString()}</span>
+                {category.trendType === "positive" && (
+                  <TrendingDown className="w-4 h-4 text-green-500" />
+                )}
+                {category.trendType === "negative" && (
+                  <TrendingUp className="w-4 h-4 text-red-500" />
+                )}
               </div>
               <div className="ml-6 text-sm space-y-1">
                 <p className="text-muted-foreground">{category.trend}</p>

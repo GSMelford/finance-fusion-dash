@@ -59,10 +59,10 @@ const Index = () => {
         <div className="lg:col-span-2">
           <SmartConclusions />
         </div>
-        <RecentTransactions className="h-full" />
+        <RecentTransactions className="h-[600px] overflow-hidden" />
       </div>
 
-      <Card className="p-6 mb-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800 col-span-full">
+      <Card className="p-6 mb-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800 w-full">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
           <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
@@ -82,6 +82,7 @@ const Index = () => {
               <Line
                 type="monotone"
                 dataKey="income"
+                name="Доходи"
                 stroke="#8e44ad"
                 strokeWidth={2}
                 dot={{ fill: "#8e44ad", strokeWidth: 2 }}
@@ -89,6 +90,7 @@ const Index = () => {
               <Line
                 type="monotone"
                 dataKey="expenses"
+                name="Витрати"
                 stroke="#e91e63"
                 strokeWidth={2}
                 dot={{ fill: "#e91e63", strokeWidth: 2 }}
@@ -96,6 +98,7 @@ const Index = () => {
               <Line
                 type="monotone"
                 dataKey="forecast"
+                name="Прогноз"
                 stroke="#4CAF50"
                 strokeDasharray="5 5"
                 strokeWidth={2}
@@ -106,16 +109,14 @@ const Index = () => {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-6">
-        <div className="lg:col-span-2">
-          <TransactionPanel />
-        </div>
-        <div className="lg:col-span-3">
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
+        <div className="space-y-6">
           <CategorySpending />
+          <TransactionPanel />
         </div>
       </div>
 
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet>
         <SheetTrigger asChild>
           <Button
             size="icon"
