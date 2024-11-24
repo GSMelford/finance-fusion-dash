@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CategorySpending from "@/components/CategorySpending";
+import CategorySpending, { categories } from "@/components/CategorySpending";
 import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
