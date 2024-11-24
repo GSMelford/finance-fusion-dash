@@ -1,108 +1,55 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { MessageCircle, Send, X, User } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CategorySpending from "@/components/CategorySpending";
 import TransactionPanel from "@/components/TransactionPanel";
 import SmartConclusions from "@/components/SmartConclusions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import CategoryLimits from "@/components/CategoryLimits";
+import RecentTransactions from "@/components/RecentTransactions";
+import ChartTooltip from "@/components/ChartTooltip";
 
 const recentTransactions = [
   { 
     id: 1, 
-    type: "buy", 
-    currency: "EUR", 
-    amount: 1000, 
-    rate: 41.50, 
+    type: "витрата", 
+    description: "Netflix Premium", 
+    amount: 450, 
     date: "2024-04-10",
-    aiTip: "Гарний час для купівлі євро, курс нижче середнього за тиждень"
+    aiTip: "Ви можете заощадити, перейшовши на спільний сімейний план"
   },
   { 
     id: 2, 
-    type: "sell", 
-    currency: "USD", 
-    amount: 500, 
-    rate: 38.50, 
+    type: "витрата", 
+    description: "АТБ Маркет", 
+    amount: 1250, 
     date: "2024-04-09",
-    aiTip: "Рекомендую почекати з продажем, прогнозується зростання курсу"
+    aiTip: "Середній чек на 15% вище за звичайний"
   },
   { 
     id: 3, 
-    type: "buy", 
-    currency: "EUR", 
-    amount: 2000, 
-    rate: 41.45, 
+    type: "витрата", 
+    description: "Комунальні послуги", 
+    amount: 3200, 
     date: "2024-04-08",
-    aiTip: "Чудова можливість для купівлі, курс стабільний"
+    aiTip: "Споживання електроенергії зросло на 20% порівняно з минулим місяцем"
   },
   { 
     id: 4, 
-    type: "sell", 
-    currency: "USD", 
-    amount: 1500, 
-    rate: 38.48, 
+    type: "витрата", 
+    description: "Сільпо", 
+    amount: 890, 
     date: "2024-04-07",
-    aiTip: "Цей курс є вигідним для продажу сьогодні"
+    aiTip: "Рекомендую звернути увагу на акційні пропозиції у цьому магазині"
   },
   { 
     id: 5, 
-    type: "buy", 
-    currency: "USD", 
-    amount: 3000, 
-    rate: 38.52, 
+    type: "витрата", 
+    description: "Spotify Premium", 
+    amount: 270, 
     date: "2024-04-06",
-    aiTip: "Курс трохи підвищився, можливо хороша ідея підождати"
-  },
-  { 
-    id: 6, 
-    type: "sell", 
-    currency: "EUR", 
-    amount: 1200, 
-    rate: 41.48, 
-    date: "2024-04-05",
-    aiTip: "Ідеальний час для продажу євро"
-  },
-  { 
-    id: 7, 
-    type: "buy", 
-    currency: "USD", 
-    amount: 800, 
-    rate: 38.49, 
-    date: "2024-04-04",
-    aiTip: "Курс знову знизився, гарний шанс для покупки"
-  },
-  { 
-    id: 8, 
-    type: "sell", 
-    currency: "EUR", 
-    amount: 1600, 
-    rate: 41.47, 
-    date: "2024-04-03",
-    aiTip: "Зараз курс дуже вигідний для продажу"
-  },
-  { 
-    id: 9, 
-    type: "buy", 
-    currency: "USD", 
-    amount: 2500, 
-    rate: 38.51, 
-    date: "2024-04-02",
-    aiTip: "Підказка: Залиште покупку до наступного тижня"
-  },
-  { 
-    id: 10, 
-    type: "sell", 
-    currency: "EUR", 
-    amount: 900, 
-    rate: 41.49, 
-    date: "2024-04-01",
-    aiTip: "Сьогодні вигідно продати євро"
-  },
+    aiTip: "Доступний студентський план зі знижкою 50%"
+  }
 ];
 
 const timeframeData = {
@@ -128,16 +75,8 @@ const timeframeData = {
   ],
 };
 
-const categoryLimits = [
-  { category: "Food & Dining", spent: 15000, limit: 20000 },
-  { category: "Entertainment", spent: 8000, limit: 10000 },
-  { category: "Transportation", spent: 5000, limit: 8000 },
-  { category: "Shopping", spent: 12000, limit: 15000 },
-];
-
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
@@ -151,77 +90,22 @@ const Index = () => {
             <p className="text-muted-foreground dark:text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
           </div>
           <Button variant="outline" className="flex items-center gap-2">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/placeholder.svg" alt="User" />
-              <AvatarFallback>
-                <User className="h-4 w-4" />
-              </AvatarFallback>
-            </Avatar>
             <span>Мій особистий кабінет</span>
           </Button>
         </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="p-4">
-          <h3 className="font-semibold mb-4">Курси валют</h3>
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <div>
-              <p className="text-sm text-muted-foreground">EUR/UAH</p>
-              <p className="text-lg font-bold">41.50</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">USD/UAH</p>
-              <p className="text-lg font-bold">38.50</p>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-sm font-medium mb-3">Останні транзакції</h4>
-            <ScrollArea className="h-[300px] pr-4">
-              <div className="space-y-3">
-                {recentTransactions.map((transaction) => (
-                  <div
-                    key={transaction.id}
-                    className={`flex flex-col p-3 rounded-lg ${
-                      transaction.type === "buy" 
-                        ? "bg-green-500/10 dark:bg-green-500/20" 
-                        : "bg-red-500/10 dark:bg-red-500/20"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className={`text-sm font-medium ${
-                          transaction.type === "buy" 
-                            ? "text-green-600 dark:text-green-400" 
-                            : "text-red-600 dark:text-red-400"
-                        }`}>
-                          {transaction.type === "buy" ? "Купівля" : "Продаж"} {transaction.currency}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(transaction.date).toLocaleDateString("uk-UA")}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-medium">
-                          {transaction.amount.toLocaleString()} {transaction.currency}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {transaction.rate} UAH
-                        </p>
-                      </div>
-                    </div>
-                    {transaction.aiTip && (
-                      <div className="mt-2 text-xs bg-blue-500/10 p-2 rounded dark:bg-blue-500/20">
-                        <span className="text-blue-600 dark:text-blue-400">💡 ШІ підказка:</span> {transaction.aiTip}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-          </div>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <SmartConclusions />
+        </div>
+        <div>
+          <TransactionPanel />
+        </div>
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <RecentTransactions />
         <Card className="col-span-2 p-6 animate-fade-up [animation-delay:200ms] dark:bg-gray-800">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
@@ -238,7 +122,7 @@ const Index = () => {
               <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip content={<ChartTooltip />} />
                 <Line
                   type="monotone"
                   dataKey="income"
@@ -267,56 +151,16 @@ const Index = () => {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <CategoryLimits limits={categoryLimits} />
-        <div className="lg:col-span-2">
-          <CategorySpending />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div className="lg:col-span-2">
-          <TransactionPanel />
-        </div>
-        <div>
-          <SmartConclusions />
-        </div>
+      <div className="mb-6">
+        <CategorySpending />
       </div>
 
       <Button
         className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary/90"
-        onClick={() => setIsChatOpen(true)}
+        onClick={() => {}}
       >
-        <MessageCircle className="w-6 h-6" />
+        <span>💬</span>
       </Button>
-
-      {isChatOpen && (
-        <Card className="fixed bottom-24 right-6 w-[350px] p-4 shadow-xl animate-fade-up">
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="/mascot.png" alt="AI Assistant" />
-                <AvatarFallback>AI</AvatarFallback>
-              </Avatar>
-              <span className="font-semibold">Фінансовий помічник</span>
-            </div>
-            <Button variant="ghost" size="icon" onClick={() => setIsChatOpen(false)}>
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-          <div className="h-[400px] border rounded-lg p-4 mb-4 overflow-y-auto">
-            <div className="bg-muted p-3 rounded-lg mb-2 max-w-[80%]">
-              Привіт! Я ваш фінансовий помічник. Як я можу допомогти вам сьогодні?
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <Input placeholder="Напишіть повідомлення..." />
-            <Button size="icon">
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-        </Card>
-      )}
     </div>
   );
 };

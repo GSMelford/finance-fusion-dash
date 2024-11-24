@@ -1,85 +1,78 @@
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Smile, Laugh, Frown, Meh, Angry, SmilePlus, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 
 const insights = [
   {
     title: "Аналіз витрат",
     content: "Ваші витрати на розваги зросли на 15% цього місяця. Рекомендуємо переглянути бюджет.",
     metric: "+15%",
-    icon: Frown
+    icon: "😕",
+    bgColor: "bg-red-50 dark:bg-red-900/20"
   },
   {
     title: "Досягнення цілей",
     content: "Вітаємо! Ви досягли мети заощаджень на цей квартал у розмірі ₴19,250!",
     metric: "100%",
-    icon: Laugh
+    icon: "🎉",
+    bgColor: "bg-green-50 dark:bg-green-900/20"
   },
   {
     title: "Оптимізація підписок",
     content: "Знайдено 3 невикористані підписки на загальну суму ₴770/місяць",
     metric: "₴770",
-    icon: Meh
+    icon: "🤔",
+    bgColor: "bg-yellow-50 dark:bg-yellow-900/20"
   },
   {
     title: "Економія на комунальних",
     content: "Ви заощадили 20% на комунальних платежах порівняно з минулим місяцем",
     metric: "-20%",
-    icon: SmilePlus
+    icon: "💫",
+    bgColor: "bg-blue-50 dark:bg-blue-900/20"
   },
   {
     title: "Перевищення бюджету",
     content: "Категорія 'Їжа та ресторани' перевищила місячний бюджет на ₴1,200",
     metric: "+₴1,200",
-    icon: Angry
+    icon: "😡",
+    bgColor: "bg-red-50 dark:bg-red-900/20"
   },
   {
     title: "Інвестиційна можливість",
     content: "На основі ваших заощаджень, рекомендуємо розглянути інвестиційні опції",
     metric: "₴5,000",
-    icon: Smile
-  },
-  {
-    title: "Регулярні платежі",
-    content: "Завтра очікується списання ₴450 за підписку на сервіси",
-    metric: "₴450",
-    icon: Meh
-  },
-  {
-    title: "Святкові витрати",
-    content: "До свят залишилось 45 днів. Рекомендуємо почати відкладати ₴1,000/тиждень",
-    metric: "45 днів",
-    icon: SmilePlus
+    icon: "💎",
+    bgColor: "bg-purple-50 dark:bg-purple-900/20"
   }
 ];
 
 const SmartConclusions = () => {
   return (
-    <Card className="p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800">
-      <div className="flex items-center space-x-2 text-amber-500 mb-4">
-        <Zap className="w-5 h-5" />
-        <h2 className="text-xl font-semibold dark:text-white">Розумні висновки</h2>
+    <Card className="p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800 shadow-lg border-2 border-primary/20">
+      <div className="flex items-center space-x-2 text-amber-500 mb-6">
+        <Zap className="w-6 h-6" />
+        <h2 className="text-2xl font-bold dark:text-white">Розумні висновки</h2>
       </div>
-      <ScrollArea className="h-[400px] pr-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {insights.map((insight, index) => {
-            const Icon = insight.icon;
-            return (
-              <div
-                key={index}
-                className="p-4 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-colors dark:bg-gray-700/50 dark:hover:bg-gray-700"
-              >
-                <div className="flex items-center space-x-2 mb-2">
-                  <Icon className="w-5 h-5 text-primary" />
-                  <h3 className="font-semibold dark:text-white">{insight.title}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground dark:text-gray-400">{insight.content}</p>
-                <div className="mt-2">
-                  <span className="text-sm font-medium text-primary">{insight.metric}</span>
-                </div>
+      <ScrollArea className="h-[500px] pr-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {insights.map((insight, index) => (
+            <div
+              key={index}
+              className={`p-4 rounded-lg ${insight.bgColor} hover:scale-[1.02] transition-transform duration-200 shadow-sm dark:shadow-gray-800/50`}
+            >
+              <div className="flex items-center space-x-3 mb-3">
+                <span className="text-2xl">{insight.icon}</span>
+                <h3 className="font-semibold text-lg dark:text-white">{insight.title}</h3>
               </div>
-            )
-          })}
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{insight.content}</p>
+              <div className="mt-2">
+                <span className="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
+                  {insight.metric}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </ScrollArea>
     </Card>
