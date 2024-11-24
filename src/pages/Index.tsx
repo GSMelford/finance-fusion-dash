@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CategorySpending from "@/components/CategorySpending";
+import CategorySpending, { categories } from "@/components/CategorySpending";
 import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
@@ -12,33 +12,40 @@ import { useTheme } from "next-themes";
 import AIChatPanel from "@/components/AIChatPanel";
 import CategoryLimitsManager from "@/components/CategoryLimitsManager";
 import CurrencyRates from "@/components/CurrencyRates";
+import { convertToUAH } from "@/utils/currency";
 
-const timeframeData = {
-  week: [
-    { name: "Mon", expenses: 2100, income: 1800, forecast: 1900, category: "Продукти", amount: 800 },
-    { name: "Tue", expenses: 1600, income: 2200, forecast: 1800, category: "Транспорт", amount: 400 },
-    { name: "Wed", expenses: 2300, income: 1900, forecast: 2000, category: "Розваги", amount: 600 },
-    { name: "Thu", expenses: 1400, income: 2500, forecast: 1700, category: "Здоров'я", amount: 900 },
-    { name: "Fri", expenses: 1900, income: 2100, forecast: 1600, category: "Кафе", amount: 700 },
-    { name: "Sat", expenses: 2500, income: 1700, forecast: 2200, category: "Подарунки", amount: 500 },
-    { name: "Sun", expenses: 1800, income: 2300, forecast: 1900, category: "Комуналка", amount: 1000 },
-  ],
-  month: [
-    { name: "Week 1", expenses: 5000, income: 4200, forecast: 4500, category: "Продукти", amount: 2500 },
-    { name: "Week 2", expenses: 4200, income: 5100, forecast: 4800, category: "Розваги", amount: 1800 },
-    { name: "Week 3", expenses: 3800, income: 4800, forecast: 4200, category: "Транспорт", amount: 1500 },
-    { name: "Week 4", expenses: 4500, income: 4400, forecast: 4600, category: "Здоров'я", amount: 2000 },
-  ],
-  quarter: [
-    { name: "Month 1", expenses: 15000, income: 12000, forecast: 13500, category: "Продукти", amount: 8000 },
-    { name: "Month 2", expenses: 13000, income: 14500, forecast: 14000, category: "Розваги", amount: 6000 },
-    { name: "Month 3", expenses: 14000, income: 13500, forecast: 13800, category: "Транспорт", amount: 7000 },
-  ],
+const generateTimeframeData = (baseExpenses: number, baseIncome: number) => {
+  const randomVariation = () => 0.8 + Math.random() * 0.4; // Random value between 0.8 and 1.2
+
+  return {
+    week: Array.from({ length: 7 }, (_, i) => ({
+      name: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"][i],
+      expenses: Math.round(baseExpenses / 7 * randomVariation()),
+      income: Math.round(baseIncome / 7 * randomVariation()),
+      forecast: Math.round(baseExpenses / 7),
+    })),
+    month: Array.from({ length: 4 }, (_, i) => ({
+      name: `Тиждень ${i + 1}`,
+      expenses: Math.round(baseExpenses / 4 * randomVariation()),
+      income: Math.round(baseIncome / 4 * randomVariation()),
+      forecast: Math.round(baseExpenses / 4),
+    })),
+    quarter: Array.from({ length: 3 }, (_, i) => ({
+      name: `Місяць ${i + 1}`,
+      expenses: Math.round(baseExpenses * randomVariation()),
+      income: Math.round(baseIncome * randomVariation()),
+      forecast: baseExpenses,
+    })),
+  };
 };
 
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
   const { theme, setTheme } = useTheme();
+
+  const totalExpenses = categories.reduce((sum, cat) => sum + cat.value, 0);
+  const estimatedIncome = Math.round(totalExpenses * 1.2); // Income is 20% higher than expenses
+  const timeframeData = generateTimeframeData(totalExpenses, estimatedIncome);
 
   return (
     <div className="min-h-screen bg-[#2A2438] p-6 md:p-8">
@@ -102,9 +109,15 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
+                <LineChart 
+                  data={timeframeData[timeframe as keyof typeof timeframeData]}
+                  className="animate-fade-in"
+                >
                   <XAxis dataKey="name" stroke="#ffffff" />
-                  <YAxis stroke="#ffffff" />
+                  <YAxis 
+                    stroke="#ffffff"
+                    tickFormatter={(value) => `₴${convertToUAH(value)}`}
+                  />
                   <Tooltip content={<ChartTooltip />} />
                   <Line
                     type="monotone"
@@ -113,6 +126,7 @@ const Index = () => {
                     stroke="#8e44ad"
                     strokeWidth={2}
                     dot={{ fill: "#8e44ad", strokeWidth: 2 }}
+                    className="animate-draw"
                   />
                   <Line
                     type="monotone"
@@ -121,6 +135,7 @@ const Index = () => {
                     stroke="#e91e63"
                     strokeWidth={2}
                     dot={{ fill: "#e91e63", strokeWidth: 2 }}
+                    className="animate-draw [animation-delay:200ms]"
                   />
                   <Line
                     type="monotone"
@@ -130,18 +145,57 @@ const Index = () => {
                     strokeDasharray="5 5"
                     strokeWidth={2}
                     dot={false}
+                    className="animate-draw [animation-delay:400ms]"
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
             <div className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
-                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} stroke="#ffffff" />
-                  <YAxis stroke="#ffffff" />
-                  <Tooltip />
-                  <Bar dataKey="expenses" name="Витрати" fill="#e91e63" />
-                  <Bar dataKey="income" name="Доходи" fill="#8e44ad" />
+                <BarChart 
+                  data={timeframeData[timeframe as keyof typeof timeframeData]}
+                  className="animate-fade-in [animation-delay:200ms]"
+                >
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45} 
+                    textAnchor="end" 
+                    height={100} 
+                    stroke="#ffffff" 
+                  />
+                  <YAxis 
+                    stroke="#ffffff"
+                    tickFormatter={(value) => `₴${convertToUAH(value)}`}
+                  />
+                  <Tooltip 
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="bg-background/95 backdrop-blur-sm p-3 rounded-lg border border-border">
+                            <p className="font-semibold">{payload[0].payload.name}</p>
+                            {payload.map((entry, index) => (
+                              <p key={index} className="text-sm">
+                                {entry.name}: ₴{convertToUAH(entry.value)}
+                              </p>
+                            ))}
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar 
+                    dataKey="expenses" 
+                    name="Витрати" 
+                    fill="#e91e63"
+                    className="animate-rise"
+                  />
+                  <Bar 
+                    dataKey="income" 
+                    name="Доходи" 
+                    fill="#8e44ad"
+                    className="animate-rise [animation-delay:200ms]"
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
