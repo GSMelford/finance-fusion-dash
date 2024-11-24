@@ -79,6 +79,15 @@ const Index = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-6">
+        <CategorySpending />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <CategoryLimitsManager />
+        <CurrencyRates />
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 mb-6">
         <Card className="p-6 animate-fade-up [animation-delay:200ms] glass-card shadow-glow">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
@@ -138,11 +147,6 @@ const Index = () => {
             </div>
           </div>
         </Card>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <CategoryLimitsManager />
-        <CurrencyRates />
       </div>
 
       <AIChatPanel />
