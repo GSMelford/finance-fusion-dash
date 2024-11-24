@@ -39,14 +39,14 @@ const AIChatPanel = () => {
       <SheetTrigger asChild>
         <Button
           size="icon"
-          className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary/90"
+          className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all bg-dark-purple hover:bg-dark-purple/90"
         >
           <MessageCircle className="w-6 h-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+      <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-dark-purple border-l-2 border-primary/30">
         <div className="h-full flex flex-col">
-          <h2 className="text-xl font-semibold mb-4">Чат з ШІ-помічником</h2>
+          <h2 className="text-xl font-semibold mb-4 text-white">Чат з ШІ-помічником</h2>
           <div className="flex-grow bg-secondary/20 rounded-lg p-4 mb-4 overflow-auto">
             {messages.map((msg, index) => (
               <div
@@ -57,10 +57,10 @@ const AIChatPanel = () => {
                     : "bg-secondary/10 rounded-lg p-3"
                 }`}
               >
-                <div className="font-medium mb-1">
+                <div className="font-medium mb-1 text-white">
                   {msg.role === "assistant" ? "🤖 Помічник" : "👤 Ви"}
                 </div>
-                <div className="whitespace-pre-wrap">{msg.message}</div>
+                <div className="whitespace-pre-wrap text-gray-300">{msg.message}</div>
               </div>
             ))}
           </div>
@@ -69,9 +69,9 @@ const AIChatPanel = () => {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Напишіть повідомлення..."
-              className="flex-grow"
+              className="flex-grow bg-secondary/50 border-primary/30 text-white placeholder:text-gray-400"
             />
-            <Button type="submit">Надіслати</Button>
+            <Button type="submit" className="bg-primary hover:bg-primary/90">Надіслати</Button>
           </form>
         </div>
       </SheetContent>

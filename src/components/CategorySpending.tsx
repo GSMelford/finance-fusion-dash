@@ -2,11 +2,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { 
   ShoppingCart, Coffee, Car, Plane,
   Heart, Gift, HomeIcon, Gamepad,
-  TrendingUp, TrendingDown, Plus
+  TrendingUp, TrendingDown
 } from "lucide-react";
 import { Card } from "./ui/card";
-import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
 
 export const categories = [
   { 
@@ -81,7 +79,6 @@ const COLORS = [
 ];
 
 const CategorySpending = () => {
-  const navigate = useNavigate();
   const total = categories.reduce((sum, cat) => sum + cat.value, 0);
 
   return (
@@ -158,13 +155,6 @@ const CategorySpending = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <Button 
-            onClick={() => navigate("/add-transaction")} 
-            className="w-full flex items-center justify-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            Додати транзакцію
-          </Button>
         </div>
       </div>
     </Card>

@@ -28,24 +28,24 @@ const CurrencyRates = () => {
   });
 
   return (
-    <Card className="p-6 animate-fade-up bg-gray-800/80 backdrop-blur-sm border-2 border-primary/30 shadow-[0_0_15px_rgba(155,135,245,0.3)]">
-      <h2 className="text-xl font-semibold mb-6 dark:text-white">Фінансова інформація</h2>
+    <Card className="p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow">
+      <h2 className="text-xl font-semibold mb-6 text-white">Фінансова інформація</h2>
       
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium mb-4 dark:text-gray-300">Курси валют</h3>
+          <h3 className="text-lg font-medium mb-4 text-gray-300">Курси валют</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-secondary/50 rounded-lg">
-              <span className="dark:text-gray-300">USD/UAH</span>
+              <span className="text-gray-300">USD/UAH</span>
               <div className="flex items-center gap-2">
-                <span className="font-medium dark:text-gray-200">₴{rates.USD.toFixed(2)}</span>
+                <span className="font-medium text-gray-200">₴{rates.USD.toFixed(2)}</span>
                 <TrendingUp className="w-4 h-4 text-green-500" />
               </div>
             </div>
             <div className="flex justify-between items-center p-3 bg-secondary/50 rounded-lg">
-              <span className="dark:text-gray-300">EUR/UAH</span>
+              <span className="text-gray-300">EUR/UAH</span>
               <div className="flex items-center gap-2">
-                <span className="font-medium dark:text-gray-200">₴{rates.EUR.toFixed(2)}</span>
+                <span className="font-medium text-gray-200">₴{rates.EUR.toFixed(2)}</span>
                 <TrendingDown className="w-4 h-4 text-red-500" />
               </div>
             </div>
@@ -53,7 +53,7 @@ const CurrencyRates = () => {
         </div>
 
         <div>
-          <h3 className="text-lg font-medium mb-4 dark:text-gray-300">Фінансові новини</h3>
+          <h3 className="text-lg font-medium mb-4 text-gray-300">Фінансові новини</h3>
           <ScrollArea className="h-[200px]">
             <div className="space-y-4">
               {news.map((item: any, index: number) => (
@@ -62,7 +62,7 @@ const CurrencyRates = () => {
                     href={item.url} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-sm dark:text-gray-300 hover:text-primary transition-colors"
+                    className="text-sm text-gray-300 hover:text-primary transition-colors"
                   >
                     {item.title}
                     <div className="text-xs text-gray-500 mt-1">
