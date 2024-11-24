@@ -61,6 +61,8 @@ const SmartConclusions = () => {
       const randomTip = financialTips[Math.floor(Math.random() * financialTips.length)];
       toast(randomTip, {
         duration: 10000,
+        dismissible: true,
+        position: "top-center",
       });
     };
 

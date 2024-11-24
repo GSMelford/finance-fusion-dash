@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "./ui/card";
+import { ScrollArea } from "./ui/scroll-area";
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 const CurrencyRates = () => {
@@ -18,6 +19,20 @@ const CurrencyRates = () => {
     initialData: { USD: 37.5, EUR: 40.8 },
     staleTime: 1000 * 60 * 15, // 15 minutes
     gcTime: 1000 * 60 * 60, // 1 hour
+  });
+
+  const { data: news } = useQuery({
+    queryKey: ["financial-news"],
+    queryFn: async () => {
+      const response = await fetch("https://api.marketaux.com/v1/news/all?symbols=TSLA,AMZN,MSFT&filter_entities=true&language=uk&api_token=YOUR_API_TOKEN");
+      const data = await response.json();
+      return data.data?.slice(0, 10) || [];
+    },
+    initialData: [
+      { title: "НБУ зміцнив курс гривні", url: "#", published_at: "2024-02-20" },
+      { title: "Інфляція в Україні знизилась до 5%", url: "#", published_at: "2024-02-19" },
+      { title: "Нові економічні прогнози від МВФ", url: "#", published_at: "2024-02-18" },
+    ],
   });
 
   return (
@@ -46,19 +61,26 @@ const CurrencyRates = () => {
         </div>
 
         <div>
-          <h3 className="text-lg font-medium mb-4 dark:text-gray-300">Фінансові поради</h3>
-          <div className="space-y-4">
-            <div className="p-4 bg-secondary/50 rounded-lg">
-              <p className="text-sm dark:text-gray-300">
-                💡 Диверсифікація заощаджень у різних валютах допомагає знизити ризики від коливань курсу.
-              </p>
+          <h3 className="text-lg font-medium mb-4 dark:text-gray-300">Фінансові новини</h3>
+          <ScrollArea className="h-[200px]">
+            <div className="space-y-4">
+              {news.map((item: any, index: number) => (
+                <div key={index} className="p-4 bg-secondary/50 rounded-lg">
+                  <a 
+                    href={item.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-sm dark:text-gray-300 hover:text-primary transition-colors"
+                  >
+                    {item.title}
+                    <div className="text-xs text-gray-500 mt-1">
+                      {new Date(item.published_at).toLocaleDateString()}
+                    </div>
+                  </a>
+                </div>
+              ))}
             </div>
-            <div className="p-4 bg-secondary/50 rounded-lg">
-              <p className="text-sm dark:text-gray-300">
-                📈 Регулярне відстеження курсів валют допомагає вибрати найкращий момент для обміну.
-              </p>
-            </div>
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </Card>
