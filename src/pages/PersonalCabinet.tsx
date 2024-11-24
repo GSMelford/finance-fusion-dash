@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Bank, CreditCard, User, Shield } from "lucide-react";
+import { Building2, CreditCard, User, Shield } from "lucide-react";
 
 const PersonalCabinet = () => {
   return (
@@ -34,7 +34,7 @@ const PersonalCabinet = () => {
 
           <Card className="p-6 dark:bg-gray-700/50 md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <Bank className="w-6 h-6 text-primary" />
+              <Building2 className="w-6 h-6 text-primary" />
               <h2 className="text-xl font-semibold text-white">Підключені банки</h2>
             </div>
             
