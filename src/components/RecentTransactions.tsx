@@ -1,5 +1,8 @@
 import { Card } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
+import { Button } from "./ui/button";
+import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const recentTransactions = [
   {
@@ -89,10 +92,21 @@ interface RecentTransactionsProps {
 }
 
 const RecentTransactions = ({ className }: RecentTransactionsProps) => {
+  const navigate = useNavigate();
+
   return (
-    <Card className={`p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow h-full ${className}`}>
-      <h3 className="text-xl font-semibold mb-4 dark:text-white">Останні транзакції</h3>
-      <ScrollArea className="h-[calc(100%-3rem)]">
+    <Card className={`p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow h-[500px] ${className}`}>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold dark:text-white">Останні транзакції</h3>
+        <Button 
+          onClick={() => navigate("/add-transaction")}
+          className="flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Додати транзакцію
+        </Button>
+      </div>
+      <ScrollArea className="h-[400px]">
         <div className="space-y-3">
           {recentTransactions.map((transaction) => (
             <div
