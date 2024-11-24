@@ -7,8 +7,9 @@ import CategorySpending, { categories } from "@/components/CategorySpending";
 import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useNavigate } from "react-router-dom";
 import AIChatPanel from "@/components/AIChatPanel";
 import CategoryLimitsManager from "@/components/CategoryLimitsManager";
 import CurrencyRates from "@/components/CurrencyRates";
@@ -42,9 +43,10 @@ const generateTimeframeData = (baseExpenses: number, baseIncome: number) => {
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
   const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
 
   const totalExpenses = categories.reduce((sum, cat) => sum + cat.value, 0);
-  const estimatedIncome = Math.round(totalExpenses * 1.2); // Income is 20% higher than expenses
+  const estimatedIncome = Math.round(totalExpenses * 1.2);
   const timeframeData = generateTimeframeData(totalExpenses, estimatedIncome);
 
   return (
@@ -71,7 +73,12 @@ const Index = () => {
                 <Moon className="h-5 w-5" />
               )}
             </Button>
-            <Button variant="outline" className="flex items-center gap-2 text-gray-200">
+            <Button 
+              variant="secondary" 
+              className="flex items-center gap-2"
+              onClick={() => navigate("/personal-cabinet")}
+            >
+              <User className="w-4 h-4" />
               <span>Мій особистий кабінет</span>
             </Button>
           </div>
@@ -82,7 +89,7 @@ const Index = () => {
         <div className="lg:col-span-2">
           <SmartConclusions />
         </div>
-        <RecentTransactions className="h-[600px] overflow-auto glass-card shadow-glow" />
+        <RecentTransactions className="h-full overflow-hidden" />
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-6">
