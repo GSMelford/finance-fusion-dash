@@ -8,8 +8,8 @@ import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { MessageCircle } from "lucide-react";
-import { categories } from "@/components/CategorySpending";
+import { MessageCircle, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const timeframeData = {
   week: [
@@ -41,6 +41,7 @@ const categoryData = categories.map(cat => ({
 
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
@@ -53,9 +54,23 @@ const Index = () => {
             <h1 className="text-4xl font-bold mb-2 dark:text-white">Фінансова панель управління</h1>
             <p className="text-muted-foreground dark:text-gray-400">Відстежуйте свої витрати та доходи в одному місці</p>
           </div>
-          <Button variant="outline" className="flex items-center gap-2">
-            <span>Мій особистий кабінет</span>
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-full"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </Button>
+            <Button variant="outline" className="flex items-center gap-2">
+              <span>Мій особистий кабінет</span>
+            </Button>
+          </div>
         </div>
       </header>
 
