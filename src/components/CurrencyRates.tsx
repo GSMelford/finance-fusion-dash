@@ -23,15 +23,7 @@ const CurrencyRates = () => {
 
   const { data: news } = useQuery({
     queryKey: ["financial-news"],
-    queryFn: async () => {
-      try {
-        const response = await fetch("https://newsapi.org/v2/top-headlines?country=ua&category=business&apiKey=YOUR_API_KEY");
-        const data = await response.json();
-        return data.articles?.slice(0, 10) || mockNews;
-      } catch (error) {
-        return mockNews;
-      }
-    },
+    queryFn: () => Promise.resolve(mockNews),
     initialData: mockNews,
   });
 
