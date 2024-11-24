@@ -102,11 +102,11 @@ const Index = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-6">
-        <Card className="p-6 animate-fade-up [animation-delay:200ms] glass-card shadow-glow">
+        <Card className="p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold dark:text-white">Доходи та витрати</h2>
+            <h2 className="text-xl font-semibold text-white">Доходи та витрати</h2>
             <Tabs defaultValue={timeframe} onValueChange={setTimeframe}>
-              <TabsList className="bg-secondary/80 backdrop-blur-sm">
+              <TabsList className="bg-muted/80 backdrop-blur-sm">
                 <TabsTrigger value="week">Тиждень</TabsTrigger>
                 <TabsTrigger value="month">Місяць</TabsTrigger>
                 <TabsTrigger value="quarter">3 місяці</TabsTrigger>

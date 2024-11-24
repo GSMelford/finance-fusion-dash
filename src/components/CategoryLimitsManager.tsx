@@ -36,22 +36,21 @@ const CategoryLimitsManager = () => {
       description: "Ліміт успішно встановлено",
     });
 
-    // Reset form
     setSelectedCategory("");
     setLimit("");
   };
 
   return (
-    <Card className="p-6 animate-fade-up dark:bg-gray-800 border-2 border-primary/30">
-      <h2 className="text-xl font-semibold mb-6 dark:text-white">Ліміти витрат</h2>
+    <Card className="p-6 animate-fade-up bg-dark-purple border-2 border-primary/30 shadow-glow">
+      <h2 className="text-xl font-semibold mb-6 text-white">Ліміти витрат</h2>
       
       <div className="mb-6">
-        <h3 className="text-lg font-medium mb-4 dark:text-gray-300">Поточні ліміти</h3>
-        <div className="space-y-4">
+        <h3 className="text-lg font-medium mb-4 text-gray-300">Поточні ліміти</h3>
+        <div className="space-y-4 custom-scrollbar max-h-[300px] overflow-y-auto pr-2">
           {limits.map((limit, index) => (
-            <div key={index} className="flex justify-between items-center p-3 bg-secondary/50 rounded-lg">
-              <span className="dark:text-gray-300">{limit.category}</span>
-              <span className="font-medium dark:text-gray-200">₴{limit.limit.toLocaleString()}</span>
+            <div key={index} className="flex justify-between items-center p-3 bg-muted/80 rounded-lg backdrop-blur-sm">
+              <span className="text-gray-300">{limit.category}</span>
+              <span className="font-medium text-gray-200">₴{limit.limit.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -59,11 +58,11 @@ const CategoryLimitsManager = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-2 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-300">
             Категорія
           </label>
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="dark:bg-gray-700 dark:border-gray-600">
+            <SelectTrigger className="bg-muted border-gray-600">
               <SelectValue placeholder="Оберіть категорію" />
             </SelectTrigger>
             <SelectContent>
@@ -79,7 +78,7 @@ const CategoryLimitsManager = () => {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-gray-300">
             Ліміт (₴)
           </label>
           <Input
@@ -87,7 +86,7 @@ const CategoryLimitsManager = () => {
             value={limit}
             onChange={(e) => setLimit(e.target.value)}
             placeholder="0.00"
-            className="dark:bg-gray-700 dark:border-gray-600"
+            className="bg-muted border-gray-600"
           />
         </div>
         <Button type="submit" className="w-full">
