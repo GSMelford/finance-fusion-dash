@@ -92,8 +92,8 @@ const Index = () => {
             <div className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
+                  <XAxis dataKey="name" stroke="#ffffff" />
+                  <YAxis stroke="#ffffff" />
                   <Tooltip content={<ChartTooltip />} />
                   <Line
                     type="monotone"
@@ -126,8 +126,8 @@ const Index = () => {
             <div className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={timeframeData[timeframe as keyof typeof timeframeData]}>
-                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-                  <YAxis />
+                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} stroke="#ffffff" />
+                  <YAxis stroke="#ffffff" />
                   <Tooltip />
                   <Bar dataKey="expenses" name="Витрати" fill="#e91e63" />
                   <Bar dataKey="income" name="Доходи" fill="#8e44ad" />

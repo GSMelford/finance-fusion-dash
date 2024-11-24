@@ -21,7 +21,7 @@ const TransactionPanel = () => {
   };
 
   return (
-    <Card className="p-6 animate-fade-up dark:bg-gray-800">
+    <Card className="p-6 animate-fade-up dark:bg-gray-800 border-2 border-primary/30">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Додати транзакцію</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

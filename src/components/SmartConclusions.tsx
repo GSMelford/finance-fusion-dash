@@ -52,7 +52,7 @@ const SmartConclusions = () => {
     <Card className="p-6 animate-fade-up [animation-delay:600ms] dark:bg-gray-800 shadow-lg border-2 border-primary/20">
       <div className="flex items-center space-x-2 text-amber-500 mb-6">
         <Zap className="w-6 h-6" />
-        <h2 className="text-2xl font-bold text-gray-800">Розумні висновки</h2>
+        <h2 className="text-2xl font-bold text-amber-500">Розумні висновки</h2>
       </div>
       <ScrollArea className="h-[500px] pr-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
