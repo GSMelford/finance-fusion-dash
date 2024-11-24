@@ -24,9 +24,13 @@ const CurrencyRates = () => {
   const { data: news } = useQuery({
     queryKey: ["financial-news"],
     queryFn: async () => {
-      const response = await fetch("https://api.marketaux.com/v1/news/all?symbols=TSLA,AMZN,MSFT&filter_entities=true&language=uk&api_token=YOUR_API_TOKEN");
+      const response = await fetch("https://api.nbp.pl/api/cenyzlota/last/10/?format=json");
       const data = await response.json();
-      return data.data?.slice(0, 10) || [];
+      return data.map((item: any) => ({
+        title: `Ціна золота: ${item.cena} PLN за грам`,
+        url: "https://www.nbp.pl/",
+        published_at: item.data
+      }));
     },
     initialData: [
       { title: "НБУ зміцнив курс гривні", url: "#", published_at: "2024-02-20" },
