@@ -123,7 +123,7 @@ const Index = () => {
                   <XAxis dataKey="name" stroke="#ffffff" />
                   <YAxis 
                     stroke="#ffffff"
-                    tickFormatter={(value) => `₴${convertToUAH(value)}`}
+                    tickFormatter={(value: number) => `₴${convertToUAH(value)}`}
                   />
                   <Tooltip content={<ChartTooltip />} />
                   <Line
@@ -172,7 +172,7 @@ const Index = () => {
                   />
                   <YAxis 
                     stroke="#ffffff"
-                    tickFormatter={(value) => `₴${convertToUAH(value)}`}
+                    tickFormatter={(value: number) => `₴${convertToUAH(value)}`}
                   />
                   <Tooltip 
                     content={({ active, payload }) => {
@@ -180,7 +180,7 @@ const Index = () => {
                         return (
                           <div className="bg-background/95 backdrop-blur-sm p-3 rounded-lg border border-border">
                             <p className="font-semibold">{payload[0].payload.name}</p>
-                            {payload.map((entry, index) => (
+                            {payload.map((entry: any, index: number) => (
                               <p key={index} className="text-sm">
                                 {entry.name}: ₴{convertToUAH(entry.value)}
                               </p>
