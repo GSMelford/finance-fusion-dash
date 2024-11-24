@@ -3,13 +3,14 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CategorySpending, { categories } from "@/components/CategorySpending";
+import CategorySpending from "@/components/CategorySpending";
 import SmartConclusions from "@/components/SmartConclusions";
 import RecentTransactions from "@/components/RecentTransactions";
 import ChartTooltip from "@/components/ChartTooltip";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { MessageCircle, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import CurrencyRates from "@/components/CurrencyRates";
+import AIChatPanel from "@/components/AIChatPanel";
 
 const timeframeData = {
   week: [
@@ -34,30 +35,13 @@ const timeframeData = {
   ],
 };
 
-const chatHistory = [
-  { role: "user", message: "Як мені зменшити витрати на продукти?" },
-  { role: "assistant", message: "Ось кілька порад:\n1. Складайте список покупок заздалегідь\n2. Купуйте продукти оптом\n3. Використовуйте програми лояльності\n4. Стежте за акціями та знижками" },
-  { role: "user", message: "Які категорії витрат найбільші?" },
-  { role: "assistant", message: "Найбільші витрати у вас на:\n1. Продукти та супермаркети - 15000 грн\n2. Подорожі - 10000 грн\n3. Дім та комуналка - 9000 грн" },
-];
-
 const Index = () => {
   const [timeframe, setTimeframe] = useState("month");
   const { theme, setTheme } = useTheme();
-  const [messages, setMessages] = useState(chatHistory);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 dark:bg-gray-900">
-      <div className="fixed top-4 right-4 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-border">
-        <div className="text-sm font-medium">
-          <div className="mb-2">Курс валют:</div>
-          <div className="space-y-1">
-            <div>USD: 37.5 ₴</div>
-            <div>EUR: 40.2 ₴</div>
-            <div>GBP: 47.1 ₴</div>
-          </div>
-        </div>
-      </div>
+      <CurrencyRates />
 
       <header className="mb-8 animate-fade-up">
         <div className="flex justify-between items-center mb-6">
@@ -148,9 +132,8 @@ const Index = () => {
                   <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="amount" name="Сума" fill="#8b5cf6">
-                    <Tooltip />
-                  </Bar>
+                  <Bar dataKey="expenses" name="Витрати" fill="#e91e63" />
+                  <Bar dataKey="income" name="Доходи" fill="#8e44ad" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -162,38 +145,7 @@ const Index = () => {
         <CategorySpending />
       </div>
 
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            size="icon"
-            className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all bg-primary hover:bg-primary/90"
-          >
-            <MessageCircle className="w-6 h-6" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="right" className="w-[400px] sm:w-[540px]">
-          <div className="h-full flex flex-col">
-            <h2 className="text-xl font-semibold mb-4">Чат з ШІ-помічником</h2>
-            <div className="flex-grow bg-secondary/20 rounded-lg p-4 mb-4 overflow-auto">
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`mb-4 ${
-                    msg.role === "assistant"
-                      ? "bg-primary/10 rounded-lg p-3"
-                      : "bg-secondary/10 rounded-lg p-3"
-                  }`}
-                >
-                  <div className="font-medium mb-1">
-                    {msg.role === "assistant" ? "🤖 Помічник" : "👤 Ви"}
-                  </div>
-                  <div className="whitespace-pre-wrap">{msg.message}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+      <AIChatPanel />
     </div>
   );
 };
