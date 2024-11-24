@@ -8,34 +8,41 @@ import CategorySpending from "@/components/CategorySpending";
 import TransactionPanel from "@/components/TransactionPanel";
 import SmartConclusions from "@/components/SmartConclusions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Exchange rate: 1 USD = 38.5 UAH (as of April 2024)
-const UAH_EXCHANGE_RATE = 38.5;
-
-const convertToUAH = (usd: number) => {
-  return (usd * UAH_EXCHANGE_RATE).toFixed(2);
-};
+const recentTransactions = [
+  { id: 1, type: "buy", currency: "EUR", amount: 1000, rate: 41.50, date: "2024-04-10" },
+  { id: 2, type: "sell", currency: "USD", amount: 500, rate: 38.50, date: "2024-04-09" },
+  { id: 3, type: "buy", currency: "EUR", amount: 2000, rate: 41.45, date: "2024-04-08" },
+  { id: 4, type: "sell", currency: "USD", amount: 1500, rate: 38.48, date: "2024-04-07" },
+  { id: 5, type: "buy", currency: "USD", amount: 3000, rate: 38.52, date: "2024-04-06" },
+  { id: 6, type: "sell", currency: "EUR", amount: 1200, rate: 41.48, date: "2024-04-05" },
+  { id: 7, type: "buy", currency: "USD", amount: 800, rate: 38.49, date: "2024-04-04" },
+  { id: 8, type: "sell", currency: "EUR", amount: 1600, rate: 41.47, date: "2024-04-03" },
+  { id: 9, type: "buy", currency: "USD", amount: 2500, rate: 38.51, date: "2024-04-02" },
+  { id: 10, type: "sell", currency: "EUR", amount: 900, rate: 41.49, date: "2024-04-01" },
+];
 
 const timeframeData = {
   week: [
-    { name: "Mon", expenses: 2000, income: 1400, forecast: 1700 },
-    { name: "Tue", expenses: 1500, income: 1210, forecast: 1600 },
-    { name: "Wed", expenses: 1000, income: 1290, forecast: 1500 },
-    { name: "Thu", expenses: 1780, income: 1000, forecast: 1400 },
-    { name: "Fri", expenses: 890, income: 1181, forecast: 1300 },
-    { name: "Sat", expenses: 1390, income: 1500, forecast: 1200 },
-    { name: "Sun", expenses: 1490, income: 1200, forecast: 1100 },
+    { name: "Mon", expenses: 2100, income: 1800, forecast: 1900 },
+    { name: "Tue", expenses: 1600, income: 2200, forecast: 1800 },
+    { name: "Wed", expenses: 2300, income: 1900, forecast: 2000 },
+    { name: "Thu", expenses: 1400, income: 2500, forecast: 1700 },
+    { name: "Fri", expenses: 1900, income: 2100, forecast: 1600 },
+    { name: "Sat", expenses: 2500, income: 1700, forecast: 2200 },
+    { name: "Sun", expenses: 1800, income: 2300, forecast: 1900 },
   ],
   month: [
-    { name: "Week 1", expenses: 4000, income: 2400, forecast: 3000 },
-    { name: "Week 2", expenses: 3000, income: 2210, forecast: 2800 },
-    { name: "Week 3", expenses: 2000, income: 2290, forecast: 2600 },
-    { name: "Week 4", expenses: 2780, income: 2000, forecast: 2400 },
+    { name: "Week 1", expenses: 5000, income: 4200, forecast: 4500 },
+    { name: "Week 2", expenses: 4200, income: 5100, forecast: 4800 },
+    { name: "Week 3", expenses: 3800, income: 4800, forecast: 4200 },
+    { name: "Week 4", expenses: 4500, income: 4400, forecast: 4600 },
   ],
   quarter: [
-    { name: "Month 1", expenses: 12000, income: 9400, forecast: 10000 },
-    { name: "Month 2", expenses: 9000, income: 8210, forecast: 9500 },
-    { name: "Month 3", expenses: 8000, income: 8290, forecast: 9000 },
+    { name: "Month 1", expenses: 15000, income: 12000, forecast: 13500 },
+    { name: "Month 2", expenses: 13000, income: 14500, forecast: 14000 },
+    { name: "Month 3", expenses: 14000, income: 13500, forecast: 13800 },
   ],
 };
 
@@ -73,10 +80,10 @@ const Index = () => {
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Exchange Rates Card */}
+        {/* Exchange Rates Card with Transactions */}
         <Card className="p-4">
-          <h3 className="font-semibold mb-2">Курси валют</h3>
-          <div className="grid grid-cols-2 gap-4">
+          <h3 className="font-semibold mb-4">Курси валют</h3>
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
               <p className="text-sm text-muted-foreground">EUR/UAH</p>
               <p className="text-lg font-bold">41.50</p>
@@ -85,6 +92,36 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">USD/UAH</p>
               <p className="text-lg font-bold">38.50</p>
             </div>
+          </div>
+          <div>
+            <h4 className="text-sm font-medium mb-3">Останні транзакції</h4>
+            <ScrollArea className="h-[300px] pr-4">
+              <div className="space-y-3">
+                {recentTransactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className="flex items-center justify-between p-2 rounded-lg bg-secondary/50 backdrop-blur-sm"
+                  >
+                    <div>
+                      <p className="text-sm font-medium">
+                        {transaction.type === "buy" ? "Купівля" : "Продаж"} {transaction.currency}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(transaction.date).toLocaleDateString("uk-UA")}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium">
+                        {transaction.amount.toLocaleString()} {transaction.currency}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {transaction.rate} UAH
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
           </div>
         </Card>
 
